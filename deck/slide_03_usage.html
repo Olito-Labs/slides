@@ -69,7 +69,7 @@
       flex: 1;
       display: flex;
       gap: 0;
-      padding: 24px 56px 0;
+      padding: 20px 56px 0;
       position: relative;
       z-index: 10;
       align-items: stretch;
@@ -79,30 +79,30 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
-    /* ── Phase Header: icon + label ── */
+    /* ── Phase Header ── */
     .phase-header {
       display: flex;
       align-items: center;
       gap: 14px;
     }
     .phase-icon {
-      width: 56px; height: 56px; border-radius: 50%;
+      width: 52px; height: 52px; border-radius: 50%;
       background: var(--gold-card-fill);
       border: 1.5px solid var(--gold-card-border);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .phase-icon svg { width: 26px; height: 26px; }
+    .phase-icon svg { width: 24px; height: 24px; }
     .phase-info { display: flex; flex-direction: column; }
     .phase-num {
       font-family: var(--font-body); font-size: 13px; font-weight: 600;
       letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
     }
     .phase-name {
-      font-family: var(--font-display); font-size: 36px; font-weight: 400;
+      font-family: var(--font-display); font-size: 34px; font-weight: 400;
       color: var(--gold); line-height: 1.15;
     }
 
@@ -114,7 +114,7 @@
       padding: 22px 24px;
     }
     .you-label {
-      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
       letter-spacing: 1.8px; text-transform: uppercase; color: var(--text-muted);
       margin-bottom: 10px;
       display: flex; align-items: center; gap: 8px;
@@ -126,7 +126,7 @@
     }
     .you-label-icon svg { width: 10px; height: 10px; }
     .you-text {
-      font-family: var(--font-body); font-size: 22px; font-weight: 400;
+      font-family: var(--font-body); font-size: 24px; font-weight: 400;
       color: var(--text-secondary); line-height: 1.45;
     }
     .you-text em {
@@ -139,14 +139,14 @@
       background: var(--gold-card-fill);
       border: 1.5px solid var(--gold-card-border);
       border-radius: 14px;
-      padding: 22px 24px;
+      padding: 24px 24px;
       display: flex;
       flex-direction: column;
     }
     .get-label {
-      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
       letter-spacing: 1.8px; text-transform: uppercase; color: var(--gold);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: flex; align-items: center; gap: 8px;
     }
     .get-label-icon {
@@ -158,29 +158,29 @@
 
     /* ── Phase 1 ghost deck preview ── */
     .ghost-preview {
-      display: flex; flex-direction: column; gap: 10px; flex: 1;
+      display: flex; flex-direction: column; gap: 14px; flex: 1;
+      justify-content: space-between;
     }
     .ghost-gt {
-      font-family: var(--font-display); font-size: 19px; font-weight: 400;
+      font-family: var(--font-display); font-size: 21px; font-weight: 400;
       font-style: italic; color: var(--gold); line-height: 1.35;
-      padding: 12px 14px;
+      padding: 14px 16px;
       background: rgba(92, 74, 18, 0.06);
       border-radius: 8px;
-      border-left: 3px solid rgba(92, 74, 18, 0.3);
     }
     .ghost-headline {
-      font-family: var(--font-body); font-size: 19px; font-weight: 600;
+      font-family: var(--font-body); font-size: 21px; font-weight: 600;
       color: var(--text-primary); line-height: 1.3;
-      padding-left: 14px;
-      border-left: 2px solid rgba(92, 74, 18, 0.2);
+      padding: 0;
     }
     .ghost-headline .num {
-      color: var(--gold); font-weight: 500; margin-right: 4px;
+      color: var(--gold); font-weight: 500; margin-right: 6px;
     }
 
     /* ── Phase 2 slides preview ── */
     .slides-preview {
-      display: flex; flex-direction: column; gap: 10px; flex: 1;
+      display: flex; flex-direction: column; gap: 12px; flex: 1;
+      justify-content: space-between;
     }
     .mini-slide {
       background: var(--bg);
@@ -201,47 +201,46 @@
     .mini-slide-thumb svg { width: 100%; height: 100%; }
     .mini-slide-info { flex: 1; }
     .mini-slide-title {
-      font-family: var(--font-body); font-size: 17px; font-weight: 600;
+      font-family: var(--font-body); font-size: 20px; font-weight: 600;
       color: var(--text-primary); line-height: 1.25; margin-bottom: 2px;
     }
     .mini-slide-type {
-      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      font-family: var(--font-body); font-size: 16px; font-weight: 500;
       color: var(--text-muted);
     }
     .mini-slide-check {
-      width: 22px; height: 22px; flex-shrink: 0;
+      width: 24px; height: 24px; flex-shrink: 0;
     }
 
     /* ── Phase 3 export preview ── */
     .export-preview {
-      display: flex; flex-direction: column; gap: 14px; flex: 1;
+      display: flex; flex-direction: column; gap: 16px; flex: 1;
       justify-content: center; align-items: center;
       text-align: center;
     }
     .export-icon-stack {
       position: relative;
-      width: 140px; height: 120px;
+      width: 150px; height: 130px;
       margin-bottom: 8px;
     }
     .export-page {
       position: absolute;
-      width: 88px; height: 110px;
+      width: 92px; height: 115px;
       background: var(--bg);
       border: 1.5px solid var(--card-border);
       border-radius: 6px;
       display: flex; align-items: flex-start; justify-content: center;
-      padding-top: 12px;
+      padding-top: 14px;
     }
-    .export-page:nth-child(1) { left: 0; top: 10px; transform: rotate(-6deg); }
-    .export-page:nth-child(2) { left: 22px; top: 4px; transform: rotate(-2deg); }
-    .export-page:nth-child(3) { left: 44px; top: 0; transform: rotate(2deg); z-index: 2; border-color: var(--gold-card-border); }
+    .export-page:nth-child(1) { left: 0; top: 12px; transform: rotate(-6deg); }
+    .export-page:nth-child(2) { left: 24px; top: 5px; transform: rotate(-2deg); }
+    .export-page:nth-child(3) { left: 48px; top: 0; transform: rotate(2deg); z-index: 2; border-color: var(--gold-card-border); }
     .export-page-lines {
-      width: 56px; display: flex; flex-direction: column; gap: 5px; padding-top: 4px;
+      width: 56px; display: flex; flex-direction: column; gap: 6px; padding-top: 4px;
     }
     .export-page-line {
       height: 3px; border-radius: 2px; background: rgba(10,25,41,0.08);
     }
-    .export-page-line.gold { background: rgba(92,74,18,0.15); }
     .export-page-line:nth-child(1) { width: 65%; }
     .export-page-line:nth-child(2) { width: 100%; }
     .export-page-line:nth-child(3) { width: 80%; }
@@ -250,15 +249,16 @@
 
     .export-command {
       font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 18px; font-weight: 500; color: var(--gold);
+      font-size: 22px; font-weight: 500; color: var(--gold);
       background: rgba(92, 74, 18, 0.08);
       border: 1.5px solid var(--gold-card-border);
       border-radius: 8px;
-      padding: 8px 18px;
+      padding: 10px 22px;
     }
     .export-desc {
-      font-family: var(--font-body); font-size: 19px; font-weight: 400;
+      font-family: var(--font-body); font-size: 22px; font-weight: 400;
       color: var(--text-secondary); line-height: 1.4;
+      max-width: 380px;
     }
 
     /* ── Arrow connectors ── */
@@ -276,7 +276,7 @@
       border: 1.5px solid var(--gold);
       border-radius: 10px;
       padding: 18px 32px;
-      margin: 16px 56px 0;
+      margin: 14px 56px 0;
       text-align: center;
       position: relative;
       z-index: 10;
@@ -340,7 +340,7 @@
             <div class="you-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#3a5068" stroke-width="1.5" stroke-linecap="round"/></svg></div>
             You describe
           </div>
-          <div class="you-text"><em>"Build a 4-slide deck making the case for $500K AI infrastructure. We have data from 62 interviews."</em></div>
+          <div class="you-text"><em>"Build a deck recommending three supply chain improvements to the client. We found $12M in annual savings across procurement, logistics, and inventory."</em></div>
         </div>
 
         <div class="you-get">
@@ -349,11 +349,11 @@
             You get back
           </div>
           <div class="ghost-preview">
-            <div class="ghost-gt">Governing thought: The 28-point gap is the largest untapped efficiency gain available this year.</div>
-            <div class="ghost-headline"><span class="num">01</span> The confidence-capability gap is 28 points wide and growing</div>
-            <div class="ghost-headline"><span class="num">02</span> Three investments close the gap within two quarters</div>
-            <div class="ghost-headline"><span class="num">03</span> Competitors who moved first show 12x efficiency gains</div>
-            <div class="ghost-headline"><span class="num">04</span> Approve $500K phased across Q2–Q3 with milestones</div>
+            <div class="ghost-gt">Three supply chain improvements unlock $12M in annual savings — procurement delivers the fastest payback.</div>
+            <div class="ghost-headline"><span class="num">01</span> Procurement renegotiation captures $5.2M within two quarters</div>
+            <div class="ghost-headline"><span class="num">02</span> Logistics consolidation saves $4.1M by reducing three carriers to one</div>
+            <div class="ghost-headline"><span class="num">03</span> Inventory optimization frees $2.7M through demand sensing</div>
+            <div class="ghost-headline"><span class="num">04</span> Phased rollout starting with procurement in Q3</div>
           </div>
         </div>
       </div>
@@ -382,7 +382,7 @@
             <div class="you-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5L5 8.5L9 3.5" stroke="#3a5068" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             You review and approve
           </div>
-          <div class="you-text">Read headlines as a paragraph. Reorder, sharpen, cut anything that fails the "so what?" test. Then approve.</div>
+          <div class="you-text">Read the headlines as a paragraph. Reorder, sharpen, cut anything that fails the "so what?" test. Then approve.</div>
         </div>
 
         <div class="you-get">
@@ -403,10 +403,10 @@
                 </svg>
               </div>
               <div class="mini-slide-info">
-                <div class="mini-slide-title">The gap is 28 points wide</div>
+                <div class="mini-slide-title">Procurement captures $5.2M</div>
                 <div class="mini-slide-type">Data slide · 1920×1080</div>
               </div>
-              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="mini-slide-check" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M8 12.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="mini-slide">
               <div class="mini-slide-thumb">
@@ -419,10 +419,10 @@
                 </svg>
               </div>
               <div class="mini-slide-info">
-                <div class="mini-slide-title">Three investments close it</div>
+                <div class="mini-slide-title">Logistics saves $4.1M</div>
                 <div class="mini-slide-type">Pipeline slide · 1920×1080</div>
               </div>
-              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="mini-slide-check" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M8 12.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="mini-slide">
               <div class="mini-slide-thumb">
@@ -435,10 +435,10 @@
                 </svg>
               </div>
               <div class="mini-slide-info">
-                <div class="mini-slide-title">Competitors show 12x gains</div>
+                <div class="mini-slide-title">Inventory frees $2.7M</div>
                 <div class="mini-slide-type">Content slide · 1920×1080</div>
               </div>
-              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="mini-slide-check" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M8 12.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="mini-slide">
               <div class="mini-slide-thumb">
@@ -450,10 +450,10 @@
                 </svg>
               </div>
               <div class="mini-slide-info">
-                <div class="mini-slide-title">Approve $500K, Q2–Q3</div>
+                <div class="mini-slide-title">Phased rollout from Q3</div>
                 <div class="mini-slide-type">CTA slide · 1920×1080</div>
               </div>
-              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="mini-slide-check" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M8 12.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
         </div>
@@ -509,14 +509,14 @@
               </div>
               <div class="export-page">
                 <div class="export-page-lines">
-                  <div class="export-page-line gold"></div>
+                  <div class="export-page-line"></div>
                   <div class="export-page-line"></div>
                   <div class="export-page-line"></div>
                 </div>
               </div>
             </div>
             <div class="export-command">deck.pdf</div>
-            <div class="export-desc">Puppeteer renders at 2x retina. Every gradient, font, and glow preserved. Print-ready.</div>
+            <div class="export-desc">Renders at 2x retina. Every gradient, font, and glow preserved. Print-ready and client-ready.</div>
           </div>
         </div>
       </div>
