@@ -1,0 +1,11 @@
+{
+  "name": "slides-pdf-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Generate PDFs from HTML presentation slides",
+  "main": "generate-pdf.js",
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.2.1"
+  }
+}

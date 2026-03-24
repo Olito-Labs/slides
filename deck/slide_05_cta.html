@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CTA — Get Started with /slides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(92, 74, 18, 0.09) 0%, transparent 50%),
+        radial-gradient(ellipse at 15% 20%, rgba(10, 25, 41, 0.03) 0%, transparent 35%),
+        radial-gradient(ellipse at 85% 80%, rgba(92, 74, 18, 0.05) 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 32px; left: 32px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 32px; right: 32px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 42px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      gap: 56px;
+      padding: 28px 80px 0;
+      position: relative;
+      z-index: 10;
+      align-items: center;
+    }
+
+    .left-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .step-card {
+      background: var(--card-fill);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 500;
+      color: var(--gold);
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(92, 74, 18, 0.08);
+      border: 1.5px solid var(--gold-card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .step-body { flex: 1; }
+
+    .step-title {
+      font-family: var(--font-body);
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .step-code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--gold);
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 8px;
+      padding: 4px 12px;
+      display: inline-block;
+      margin-top: 6px;
+    }
+
+    .right-col {
+      width: 580px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-card {
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold);
+      border-radius: 20px;
+      padding: 48px 44px 44px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-label {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .cta-command {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 60px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-divider {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-bottom: 28px;
+    }
+
+    .cta-instructions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .cta-instruction {
+      font-family: var(--font-body);
+      font-size: 23px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cta-instruction strong {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .cta-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .cta-badges {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(92, 74, 18, 0.08);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 100px;
+      padding: 10px 22px;
+    }
+    .cta-badge-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 20px 80px 44px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M 960 0 Q 920 540 960 1080" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+        <path d="M 940 0 Q 900 540 940 1080" stroke="rgba(92,74,18,0.018)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">05 / 05</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">Three steps from prompt to polished deck</h2>
+    </div>
+
+    <div class="content">
+      <div class="left-col">
+        <div class="step-cards">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Invoke the skill</div>
+              <div class="step-desc">Type your deck topic in Claude Code. Triggers on "slides," "pitch deck," "ghost deck," or "dot-dash."</div>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Refine the narrative</div>
+              <div class="step-desc">Review the dot-dash outline. Reorder, sharpen headlines, cut anything that fails the "So What?" test.</div>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Generate and share</div>
+              <div class="step-desc">HTML renders instantly in any browser. One command exports a pixel-perfect combined PDF.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div class="cta-card">
+          <div class="cta-label">Try It Now</div>
+          <div class="cta-command">/slides</div>
+          <div class="cta-divider"></div>
+          <div class="cta-instructions">
+            <div class="cta-instruction">
+              <span class="cta-dot"></span>
+              <span><strong>Install</strong> the skill in ~/.claude/skills/</span>
+            </div>
+            <div class="cta-instruction">
+              <span class="cta-dot"></span>
+              <span><strong>Describe</strong> your deck in plain language</span>
+            </div>
+            <div class="cta-instruction">
+              <span class="cta-dot"></span>
+              <span><strong>Export</strong> PDF with one command</span>
+            </div>
+          </div>
+          <div class="cta-badges">
+            <div class="cta-badge">
+              <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M3 8.5L6.5 12L13 4" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="cta-badge-text">Claude Code</span>
+            </div>
+            <div class="cta-badge">
+              <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M3 8.5L6.5 12L13 4" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="cta-badge-text">No dependencies</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">Olito Labs &middot; /slides</span>
+      <span class="footer-label">olitolabs.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

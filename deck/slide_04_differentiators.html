@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Differentiators — What Makes It Different</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 35%, rgba(92, 74, 18, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(10, 25, 41, 0.04) 0%, transparent 35%),
+        radial-gradient(ellipse at 85% 75%, rgba(10, 25, 41, 0.03) 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .cards-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      padding: 28px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .diff-card {
+      background: var(--card-fill);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+    .diff-card.hero {
+      background: var(--gold-card-fill);
+      border-color: var(--gold-card-border);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(92, 74, 18, 0.08);
+      border: 1.5px solid var(--gold-card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .card-icon svg { width: 24px; height: 24px; }
+
+    .card-title {
+      font-family: var(--font-body);
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .diff-card.hero .card-title {
+      color: var(--gold);
+    }
+
+    .card-desc {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-tag {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+    }
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .tag-text {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 20px 56px 48px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M -50 200 Q 400 300 960 320 Q 1520 300 1970 200" stroke="rgba(92,74,18,0.03)" stroke-width="1"/>
+        <path d="M -50 900 Q 400 820 960 800 Q 1520 820 1970 900" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">04 / 05</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">Consulting-grade methodology kills the AI-slop aesthetic</h2>
+    </div>
+
+    <div class="cards-grid">
+      <div class="diff-card hero">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 9l10 6 10-6-10-6z" stroke="#5c4a12" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 15l10 6 10-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card-title">Pyramid Principle</div>
+        <div class="card-desc">Every deck starts with a governing thought. Key lines support it. Data supports them. No slide exists without a reason in the argument structure.</div>
+        <div class="card-tag">
+          <div class="tag-dot"></div>
+          <span class="tag-text">Minto Framework</span>
+        </div>
+      </div>
+
+      <div class="diff-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#5c4a12" stroke-width="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#5c4a12" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#5c4a12" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="#5c4a12" stroke-width="1.5"/></svg>
+        </div>
+        <div class="card-title">MECE Structure</div>
+        <div class="card-desc">Mutually exclusive, collectively exhaustive. No overlapping slides, no gaps a skeptic could exploit. The framework consultants use to pass partner review.</div>
+        <div class="card-tag">
+          <div class="tag-dot"></div>
+          <span class="tag-text">Analytical Rigor</span>
+        </div>
+      </div>
+
+      <div class="diff-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h14" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="card-title">Dot-Dash Ghost Deck</div>
+        <div class="card-desc">Headlines are written and tested before any design begins. Read them aloud as a paragraph — if the story breaks, restructure. No wasted slides.</div>
+        <div class="card-tag">
+          <div class="tag-dot"></div>
+          <span class="tag-text">Narrative First</span>
+        </div>
+      </div>
+
+      <div class="diff-card hero">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#5c4a12" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card-title">Distinctive Design System</div>
+        <div class="card-desc">Cormorant Garamond + Outfit. Warm cream backgrounds, gold accents at 8:1 contrast. Corner frames, ambient glows, contour lines. Not another Inter-on-white deck.</div>
+        <div class="card-tag">
+          <div class="tag-dot"></div>
+          <span class="tag-text">Anti-Slop</span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">Olito Labs &middot; Methodology</span>
+      <span class="footer-label">olitolabs.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

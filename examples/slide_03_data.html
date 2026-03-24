@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data — Metrics Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 35%, rgba(92, 74, 18, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(10, 25, 41, 0.04) 0%, transparent 35%),
+        radial-gradient(ellipse at 85% 75%, rgba(10, 25, 41, 0.03) 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 24px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .metrics-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding: 28px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .metric-card {
+      background: var(--card-fill);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .metric-card.hero {
+      background: var(--gold-card-fill);
+      border-color: var(--gold-card-border);
+    }
+
+    .metric-number {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .metric-card.hero .metric-number {
+      color: var(--gold);
+    }
+
+    .metric-label {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .metric-desc {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .insight-strip {
+      display: flex;
+      gap: 24px;
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .insight-card {
+      flex: 1;
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 10px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .insight-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(92, 74, 18, 0.10);
+      border: 1.5px solid var(--gold-card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .insight-icon svg { width: 16px; height: 16px; }
+
+    .insight-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .insight-text strong {
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 20px 56px 48px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M -50 200 Q 400 300 960 320 Q 1520 300 1970 200" stroke="rgba(92,74,18,0.03)" stroke-width="1"/>
+        <path d="M -50 900 Q 400 820 960 800 Q 1520 820 1970 900" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="../assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">04 / 06</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">Measurable results across every dimension</h2>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card hero">
+        <div class="metric-number">48</div>
+        <div class="metric-label">Customer Interviews</div>
+        <div class="metric-desc">Deep discovery across 30 companies and 5 verticals</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">12x</div>
+        <div class="metric-label">Efficiency Gain</div>
+        <div class="metric-desc">Average time savings on core workflow after 4-week engagement</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">94%</div>
+        <div class="metric-label">Retention Rate</div>
+        <div class="metric-desc">Clients renewing after initial engagement period</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">6</div>
+        <div class="metric-label">Enterprise Clients</div>
+        <div class="metric-desc">Fortune 500 companies adopting the platform</div>
+      </div>
+      <div class="metric-card hero">
+        <div class="metric-number">$2.4M</div>
+        <div class="metric-label">Pipeline Value</div>
+        <div class="metric-desc">Qualified opportunities across three verticals</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">37%</div>
+        <div class="metric-label">Adoption Gap</div>
+        <div class="metric-desc">Difference between tool access and actual daily usage</div>
+      </div>
+    </div>
+
+    <div class="insight-strip">
+      <div class="insight-card">
+        <div class="insight-icon">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="#5c4a12" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="insight-text"><strong>100%</strong> of adopters started from a specific workflow pain point — the only proven trigger</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="insight-text"><strong>3x engagement</strong> on interactive content vs static formats — dwell time drives conversion</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="#5c4a12" stroke-width="2"/></svg>
+        </div>
+        <div class="insight-text"><strong>Net Promoter Score of 82</strong> — highest in category across all customer segments</div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">Olito Labs &middot; Traction</span>
+      <span class="footer-label">olitolabs.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

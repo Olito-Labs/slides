@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage — The Full Workflow Across Three Phases</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px; height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex; flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 18% 35%, rgba(92,74,18,0.06) 0%, transparent 45%),
+        radial-gradient(ellipse at 55% 70%, rgba(92,74,18,0.04) 0%, transparent 40%),
+        radial-gradient(ellipse at 88% 30%, rgba(10,25,41,0.03) 0%, transparent 35%);
+    }
+
+    .contours { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner { position: absolute; width: 80px; height: 80px; border-color: var(--gold-border); border-style: solid; border-width: 0; }
+    .corner.tl { top: 32px; left: 32px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 32px; right: 32px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 42px 56px 0; position: relative; z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text { font-family: var(--font-body); font-size: 18px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
+    .slide-label { font-family: var(--font-body); font-size: 14px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+
+    .title-block { padding: 20px 56px 0; position: relative; z-index: 10; }
+    .title { font-family: var(--font-display); font-size: 48px; font-weight: 300; color: var(--text-primary); letter-spacing: -0.01em; }
+
+    /* ── Three-Phase User Journey ── */
+    .journey {
+      flex: 1;
+      display: flex;
+      gap: 0;
+      padding: 24px 56px 0;
+      position: relative;
+      z-index: 10;
+      align-items: stretch;
+    }
+
+    .phase-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── Phase Header: icon + label ── */
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .phase-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .phase-icon svg { width: 26px; height: 26px; }
+    .phase-info { display: flex; flex-direction: column; }
+    .phase-num {
+      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+    }
+    .phase-name {
+      font-family: var(--font-display); font-size: 36px; font-weight: 400;
+      color: var(--gold); line-height: 1.15;
+    }
+
+    /* ── "You do" card ── */
+    .you-do {
+      background: var(--card-fill);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 22px 24px;
+    }
+    .you-label {
+      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      letter-spacing: 1.8px; text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .you-label-icon {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--card-border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .you-label-icon svg { width: 10px; height: 10px; }
+    .you-text {
+      font-family: var(--font-body); font-size: 22px; font-weight: 400;
+      color: var(--text-secondary); line-height: 1.45;
+    }
+    .you-text em {
+      font-style: italic; color: var(--text-primary); font-weight: 500;
+    }
+
+    /* ── "You get" card ── */
+    .you-get {
+      flex: 1;
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .get-label {
+      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      letter-spacing: 1.8px; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .get-label-icon {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(92, 74, 18, 0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .get-label-icon svg { width: 10px; height: 10px; }
+
+    /* ── Phase 1 ghost deck preview ── */
+    .ghost-preview {
+      display: flex; flex-direction: column; gap: 10px; flex: 1;
+    }
+    .ghost-gt {
+      font-family: var(--font-display); font-size: 19px; font-weight: 400;
+      font-style: italic; color: var(--gold); line-height: 1.35;
+      padding: 12px 14px;
+      background: rgba(92, 74, 18, 0.06);
+      border-radius: 8px;
+      border-left: 3px solid rgba(92, 74, 18, 0.3);
+    }
+    .ghost-headline {
+      font-family: var(--font-body); font-size: 19px; font-weight: 600;
+      color: var(--text-primary); line-height: 1.3;
+      padding-left: 14px;
+      border-left: 2px solid rgba(92, 74, 18, 0.2);
+    }
+    .ghost-headline .num {
+      color: var(--gold); font-weight: 500; margin-right: 4px;
+    }
+
+    /* ── Phase 2 slides preview ── */
+    .slides-preview {
+      display: flex; flex-direction: column; gap: 10px; flex: 1;
+    }
+    .mini-slide {
+      background: var(--bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .mini-slide-thumb {
+      width: 80px; height: 45px; flex-shrink: 0;
+      border-radius: 4px;
+      border: 1.5px solid var(--card-border);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .mini-slide-thumb svg { width: 100%; height: 100%; }
+    .mini-slide-info { flex: 1; }
+    .mini-slide-title {
+      font-family: var(--font-body); font-size: 17px; font-weight: 600;
+      color: var(--text-primary); line-height: 1.25; margin-bottom: 2px;
+    }
+    .mini-slide-type {
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      color: var(--text-muted);
+    }
+    .mini-slide-check {
+      width: 22px; height: 22px; flex-shrink: 0;
+    }
+
+    /* ── Phase 3 export preview ── */
+    .export-preview {
+      display: flex; flex-direction: column; gap: 14px; flex: 1;
+      justify-content: center; align-items: center;
+      text-align: center;
+    }
+    .export-icon-stack {
+      position: relative;
+      width: 140px; height: 120px;
+      margin-bottom: 8px;
+    }
+    .export-page {
+      position: absolute;
+      width: 88px; height: 110px;
+      background: var(--bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 6px;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 12px;
+    }
+    .export-page:nth-child(1) { left: 0; top: 10px; transform: rotate(-6deg); }
+    .export-page:nth-child(2) { left: 22px; top: 4px; transform: rotate(-2deg); }
+    .export-page:nth-child(3) { left: 44px; top: 0; transform: rotate(2deg); z-index: 2; border-color: var(--gold-card-border); }
+    .export-page-lines {
+      width: 56px; display: flex; flex-direction: column; gap: 5px; padding-top: 4px;
+    }
+    .export-page-line {
+      height: 3px; border-radius: 2px; background: rgba(10,25,41,0.08);
+    }
+    .export-page-line.gold { background: rgba(92,74,18,0.15); }
+    .export-page-line:nth-child(1) { width: 65%; }
+    .export-page-line:nth-child(2) { width: 100%; }
+    .export-page-line:nth-child(3) { width: 80%; }
+    .export-page:nth-child(3) .export-page-line { background: rgba(92,74,18,0.12); }
+    .export-page:nth-child(3) .export-page-line:nth-child(1) { background: rgba(92,74,18,0.25); }
+
+    .export-command {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 18px; font-weight: 500; color: var(--gold);
+      background: rgba(92, 74, 18, 0.08);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 8px;
+      padding: 8px 18px;
+    }
+    .export-desc {
+      font-family: var(--font-body); font-size: 19px; font-weight: 400;
+      color: var(--text-secondary); line-height: 1.4;
+    }
+
+    /* ── Arrow connectors ── */
+    .journey-connector {
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; flex-shrink: 0;
+      padding-top: 40px;
+    }
+
+    @keyframes dash-flow { from { stroke-dashoffset: 16; } to { stroke-dashoffset: 0; } }
+
+    /* ── Insight bar ── */
+    .insight-bar {
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold);
+      border-radius: 10px;
+      padding: 18px 32px;
+      margin: 16px 56px 0;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    .insight-text {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .footer {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 12px 56px 44px; position: relative; z-index: 10;
+    }
+    .footer-label { font-family: var(--font-body); font-size: 14px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M 0 420 Q 640 390 1280 420 Q 1600 435 1920 420" stroke="rgba(92,74,18,0.02)" stroke-width="1"/>
+        <path d="M 0 680 Q 640 700 1280 680 Q 1600 670 1920 680" stroke="rgba(92,74,18,0.018)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">03 / 05</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">You prompt, review, and export — the AI handles everything between</h2>
+    </div>
+
+    <div class="journey">
+
+      <!-- ═══ PHASE 1: NARRATIVE ═══ -->
+      <div class="phase-col">
+        <div class="phase-header">
+          <div class="phase-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 10h12M4 14h14M4 18h10" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="phase-info">
+            <span class="phase-num">Phase 1</span>
+            <span class="phase-name">Narrative</span>
+          </div>
+        </div>
+
+        <div class="you-do">
+          <div class="you-label">
+            <div class="you-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#3a5068" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            You describe
+          </div>
+          <div class="you-text"><em>"Build a 4-slide deck making the case for $500K AI infrastructure. We have data from 62 interviews."</em></div>
+        </div>
+
+        <div class="you-get">
+          <div class="get-label">
+            <div class="get-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5L5 8.5L9 3.5" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            You get back
+          </div>
+          <div class="ghost-preview">
+            <div class="ghost-gt">Governing thought: The 28-point gap is the largest untapped efficiency gain available this year.</div>
+            <div class="ghost-headline"><span class="num">01</span> The confidence-capability gap is 28 points wide and growing</div>
+            <div class="ghost-headline"><span class="num">02</span> Three investments close the gap within two quarters</div>
+            <div class="ghost-headline"><span class="num">03</span> Competitors who moved first show 12x efficiency gains</div>
+            <div class="ghost-headline"><span class="num">04</span> Approve $500K phased across Q2–Q3 with milestones</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="journey-connector">
+        <svg width="32" height="44" viewBox="0 0 32 44" fill="none">
+          <line x1="0" y1="22" x2="22" y2="22" stroke="#5c4a12" stroke-width="1.5" stroke-dasharray="5 4" style="animation: dash-flow 0.8s linear infinite;"/>
+          <path d="M18 16l6 6-6 6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- ═══ PHASE 2: SLIDES ═══ -->
+      <div class="phase-col">
+        <div class="phase-header">
+          <div class="phase-icon">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#5c4a12" stroke-width="1.5"/><path d="M3 9h18M9 9v12" stroke="#5c4a12" stroke-width="1.5"/></svg>
+          </div>
+          <div class="phase-info">
+            <span class="phase-num">Phase 2</span>
+            <span class="phase-name">Slides</span>
+          </div>
+        </div>
+
+        <div class="you-do">
+          <div class="you-label">
+            <div class="you-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5L5 8.5L9 3.5" stroke="#3a5068" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            You review and approve
+          </div>
+          <div class="you-text">Read headlines as a paragraph. Reorder, sharpen, cut anything that fails the "so what?" test. Then approve.</div>
+        </div>
+
+        <div class="you-get">
+          <div class="get-label">
+            <div class="get-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5L5 8.5L9 3.5" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            You get back
+          </div>
+          <div class="slides-preview">
+            <div class="mini-slide">
+              <div class="mini-slide-thumb">
+                <svg viewBox="0 0 80 45" fill="none">
+                  <rect width="80" height="45" rx="2" fill="#f5f3ee"/>
+                  <rect x="6" y="6" width="38" height="4" rx="1" fill="rgba(92,74,18,0.2)"/>
+                  <rect x="6" y="14" width="68" height="2" rx="1" fill="rgba(10,25,41,0.08)"/>
+                  <rect x="6" y="19" width="52" height="2" rx="1" fill="rgba(10,25,41,0.06)"/>
+                  <rect x="6" y="26" width="30" height="14" rx="2" fill="rgba(92,74,18,0.06)" stroke="rgba(92,74,18,0.15)" stroke-width="0.5"/>
+                  <rect x="42" y="26" width="30" height="14" rx="2" fill="rgba(10,25,41,0.04)" stroke="rgba(10,25,41,0.08)" stroke-width="0.5"/>
+                </svg>
+              </div>
+              <div class="mini-slide-info">
+                <div class="mini-slide-title">The gap is 28 points wide</div>
+                <div class="mini-slide-type">Data slide · 1920×1080</div>
+              </div>
+              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="mini-slide">
+              <div class="mini-slide-thumb">
+                <svg viewBox="0 0 80 45" fill="none">
+                  <rect width="80" height="45" rx="2" fill="#f5f3ee"/>
+                  <rect x="6" y="6" width="42" height="4" rx="1" fill="rgba(92,74,18,0.2)"/>
+                  <rect x="6" y="16" width="20" height="24" rx="2" fill="rgba(92,74,18,0.06)" stroke="rgba(92,74,18,0.12)" stroke-width="0.5"/>
+                  <rect x="30" y="16" width="20" height="24" rx="2" fill="rgba(92,74,18,0.06)" stroke="rgba(92,74,18,0.12)" stroke-width="0.5"/>
+                  <rect x="54" y="16" width="20" height="24" rx="2" fill="rgba(92,74,18,0.06)" stroke="rgba(92,74,18,0.12)" stroke-width="0.5"/>
+                </svg>
+              </div>
+              <div class="mini-slide-info">
+                <div class="mini-slide-title">Three investments close it</div>
+                <div class="mini-slide-type">Pipeline slide · 1920×1080</div>
+              </div>
+              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="mini-slide">
+              <div class="mini-slide-thumb">
+                <svg viewBox="0 0 80 45" fill="none">
+                  <rect width="80" height="45" rx="2" fill="#f5f3ee"/>
+                  <rect x="6" y="6" width="36" height="4" rx="1" fill="rgba(92,74,18,0.2)"/>
+                  <rect x="6" y="14" width="68" height="2" rx="1" fill="rgba(10,25,41,0.06)"/>
+                  <rect x="6" y="20" width="68" height="2" rx="1" fill="rgba(10,25,41,0.05)"/>
+                  <rect x="6" y="26" width="68" height="14" rx="2" fill="rgba(92,74,18,0.05)" stroke="rgba(92,74,18,0.12)" stroke-width="0.5"/>
+                </svg>
+              </div>
+              <div class="mini-slide-info">
+                <div class="mini-slide-title">Competitors show 12x gains</div>
+                <div class="mini-slide-type">Content slide · 1920×1080</div>
+              </div>
+              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="mini-slide">
+              <div class="mini-slide-thumb">
+                <svg viewBox="0 0 80 45" fill="none">
+                  <rect width="80" height="45" rx="2" fill="#f5f3ee"/>
+                  <rect x="6" y="6" width="32" height="4" rx="1" fill="rgba(92,74,18,0.2)"/>
+                  <rect x="6" y="16" width="40" height="24" rx="2" fill="rgba(10,25,41,0.04)" stroke="rgba(10,25,41,0.08)" stroke-width="0.5"/>
+                  <rect x="50" y="16" width="24" height="24" rx="2" fill="rgba(92,74,18,0.08)" stroke="rgba(92,74,18,0.2)" stroke-width="0.5"/>
+                </svg>
+              </div>
+              <div class="mini-slide-info">
+                <div class="mini-slide-title">Approve $500K, Q2–Q3</div>
+                <div class="mini-slide-type">CTA slide · 1920×1080</div>
+              </div>
+              <svg class="mini-slide-check" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="rgba(92,74,18,0.1)" stroke="rgba(92,74,18,0.3)" stroke-width="1"/><path d="M7 11.5l3 3 5-6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="journey-connector">
+        <svg width="32" height="44" viewBox="0 0 32 44" fill="none">
+          <line x1="0" y1="22" x2="22" y2="22" stroke="#5c4a12" stroke-width="1.5" stroke-dasharray="5 4" style="animation: dash-flow 0.8s linear infinite;"/>
+          <path d="M18 16l6 6-6 6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- ═══ PHASE 3: PDF ═══ -->
+      <div class="phase-col">
+        <div class="phase-header">
+          <div class="phase-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="phase-info">
+            <span class="phase-num">Phase 3</span>
+            <span class="phase-name">PDF</span>
+          </div>
+        </div>
+
+        <div class="you-do">
+          <div class="you-label">
+            <div class="you-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2v8" stroke="#3a5068" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            You say
+          </div>
+          <div class="you-text"><em>"Export to PDF"</em> — that is the entire instruction. One sentence.</div>
+        </div>
+
+        <div class="you-get">
+          <div class="get-label">
+            <div class="get-label-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5L5 8.5L9 3.5" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            You get back
+          </div>
+          <div class="export-preview">
+            <div class="export-icon-stack">
+              <div class="export-page">
+                <div class="export-page-lines">
+                  <div class="export-page-line"></div>
+                  <div class="export-page-line"></div>
+                  <div class="export-page-line"></div>
+                </div>
+              </div>
+              <div class="export-page">
+                <div class="export-page-lines">
+                  <div class="export-page-line"></div>
+                  <div class="export-page-line"></div>
+                  <div class="export-page-line"></div>
+                </div>
+              </div>
+              <div class="export-page">
+                <div class="export-page-lines">
+                  <div class="export-page-line gold"></div>
+                  <div class="export-page-line"></div>
+                  <div class="export-page-line"></div>
+                </div>
+              </div>
+            </div>
+            <div class="export-command">deck.pdf</div>
+            <div class="export-desc">Puppeteer renders at 2x retina. Every gradient, font, and glow preserved. Print-ready.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="insight-bar">
+      <span class="insight-text">You stay in the argument. The AI stays in the formatting. Neither crosses into the other's domain.</span>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">Olito Labs &middot; /slides</span>
+      <span class="footer-label">olitolabs.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

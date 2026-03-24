@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recommendations — Action Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(92, 74, 18, 0.09) 0%, transparent 50%),
+        radial-gradient(ellipse at 15% 20%, rgba(10, 25, 41, 0.03) 0%, transparent 35%),
+        radial-gradient(ellipse at 85% 80%, rgba(92, 74, 18, 0.05) 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 32px; left: 32px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 32px; right: 32px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 42px 80px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 20px 80px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      gap: 56px;
+      padding: 24px 80px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .left-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-header {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .rec-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .rec-card {
+      background: var(--card-fill);
+      border: 1.5px solid var(--card-border);
+      border-radius: 10px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      flex: 1;
+    }
+
+    .rec-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(92, 74, 18, 0.08);
+      border: 1.5px solid var(--gold-card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .rec-body { flex: 1; }
+
+    .rec-title {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .rec-desc {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .right-col {
+      width: 580px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .price-card {
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold);
+      border-radius: 20px;
+      padding: 44px 40px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .price-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .price-amount {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .price-context {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .price-divider {
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 24px;
+    }
+
+    .price-detail {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .price-detail strong {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .guarantee-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(92, 74, 18, 0.08);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 100px;
+      padding: 10px 24px;
+      margin-top: 20px;
+    }
+    .guarantee-text {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 16px 48px;
+      background: var(--gold);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 20px 80px 44px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M 960 0 Q 920 540 960 1080" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+        <path d="M 940 0 Q 900 540 940 1080" stroke="rgba(92,74,18,0.018)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="../assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">06 / 06</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">Three reasons to start now</h2>
+    </div>
+
+    <div class="content">
+      <div class="left-col">
+        <div class="rec-cards">
+          <div class="rec-card">
+            <div class="rec-num">1</div>
+            <div class="rec-body">
+              <div class="rec-title">Compound advantage</div>
+              <div class="rec-desc">Every week of AI fluency compounds. Teams that start now build six months of muscle memory before competitors begin.</div>
+            </div>
+          </div>
+          <div class="rec-card">
+            <div class="rec-num">2</div>
+            <div class="rec-body">
+              <div class="rec-title">Guided path vs. solo exploration</div>
+              <div class="rec-desc">Self-taught learners waste 80% of time on dead ends. Structured guidance eliminates the single biggest barrier: not knowing what you don't know.</div>
+            </div>
+          </div>
+          <div class="rec-card">
+            <div class="rec-num">3</div>
+            <div class="rec-body">
+              <div class="rec-title">Ship real output from day one</div>
+              <div class="rec-desc">No theory-first curriculum. Every session produces a deployed skill that solves a workflow you identified. Immediate, measurable ROI.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div class="price-card">
+          <div class="price-label">Investment</div>
+          <div class="price-amount">$5,000</div>
+          <div class="price-context">4 sessions over 4 weeks</div>
+          <div class="price-divider"></div>
+          <div class="price-detail">
+            <strong>1:1 coaching</strong> + community access<br/>
+            <strong>Hands-on</strong> skill building every session<br/>
+            <strong>Async support</strong> between sessions
+          </div>
+          <div class="guarantee-badge">
+            <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M3 8.5L6.5 12L13 4" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="guarantee-text">Satisfaction guaranteed</span>
+          </div>
+          <a class="cta-button" href="#">Get Started</a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">Olito Labs &middot; Enrollment</span>
+      <span class="footer-label">olitolabs.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

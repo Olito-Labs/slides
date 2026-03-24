@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pipeline — Horizontal Process Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(92, 74, 18, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 15% 80%, rgba(10, 25, 41, 0.03) 0%, transparent 35%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .pipeline {
+      flex: 1;
+      display: flex;
+      gap: 0;
+      padding: 24px 56px 0;
+      position: relative;
+      z-index: 10;
+      align-items: stretch;
+    }
+
+    .stage-card {
+      flex: 1;
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 14px;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stage-num {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: rgba(92, 74, 18, 0.18);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stage-title {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 500;
+      color: var(--gold);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .stage-desc {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .stage-status {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1.5px solid var(--gold-card-border);
+    }
+    .status-text {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      flex-shrink: 0;
+    }
+    .connector svg { width: 20px; height: 20px; }
+
+    .insight-bar {
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 10px;
+      padding: 20px 32px;
+      margin: 16px 56px 0;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    .insight-text {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 16px 56px 48px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M 0 540 Q 480 500 960 540 Q 1440 580 1920 540" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="../assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">03 / 06</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">Four stages from assessment to independence</h2>
+      <p class="subtitle">Each stage builds a production skill that solves a real workflow problem.</p>
+    </div>
+
+    <div class="pipeline">
+      <div class="stage-card">
+        <div class="stage-num">01</div>
+        <div class="stage-title">Discover</div>
+        <div class="stage-desc">Map current workflows, identify highest-friction processes, prioritize by ROI and feasibility.</div>
+        <div class="stage-status">
+          <div class="status-text">Week 1</div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-num">02</div>
+        <div class="stage-title">Build</div>
+        <div class="stage-desc">Create your first AI skill targeting the top-priority workflow. Hands-on, guided implementation.</div>
+        <div class="stage-status">
+          <div class="status-text">Week 2</div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-num">03</div>
+        <div class="stage-title">Ship</div>
+        <div class="stage-desc">Deploy the skill into production. Validate with real data, iterate based on output quality.</div>
+        <div class="stage-status">
+          <div class="status-text">Week 3</div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#5c4a12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-num">04</div>
+        <div class="stage-title">Scale</div>
+        <div class="stage-desc">Apply the pattern to additional workflows. Build your AI operating system for ongoing leverage.</div>
+        <div class="stage-status">
+          <div class="status-text">Week 4</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-bar">
+      <span class="insight-text">Skills are the vehicle, not the capstone — building teaches everything simultaneously.</span>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">Olito Labs &middot; Program</span>
+      <span class="footer-label">olitolabs.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>
