@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feature Grid — Program Components</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 35%, rgba(92, 74, 18, 0.07) 0%, transparent 45%),
+        radial-gradient(ellipse at 70% 65%, rgba(92, 74, 18, 0.05) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 90%, rgba(10, 25, 41, 0.03) 0%, transparent 35%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    /* HEADER — Consistency Canon */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* CONTENT AREA — space-between with 3 children */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 56px 120px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Block 1: Title area */
+    .title-area {}
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .page-subtitle {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    /* Block 2: Feature grid — 2×2 */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 80px;
+      row-gap: 60px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .feature-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-card-border);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .feature-icon svg {
+      width: 44px;
+      height: 44px;
+    }
+
+    .feature-body {
+      flex: 1;
+      padding-top: 8px;
+    }
+    .feature-title {
+      font-family: var(--font-body);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .feature-desc {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Block 3: Philosophy bar */
+    .philosophy-section {}
+
+    .philosophy-rule {
+      width: 100%;
+      height: 1.5px;
+      background: var(--gold);
+      opacity: 0.25;
+      margin-bottom: 28px;
+    }
+
+    .philosophy-row {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .philosophy-item {
+      flex: 1;
+      text-align: center;
+      padding: 0 32px;
+    }
+
+    .philosophy-divider {
+      width: 1.5px;
+      height: 56px;
+      background: var(--gold);
+      opacity: 0.25;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .philosophy-headline {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .philosophy-desc {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* FOOTER — Consistency Canon */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 16px 56px 48px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M 400 0 Q 380 540 400 1080" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+        <path d="M 1520 0 Q 1540 540 1520 1080" stroke="rgba(92,74,18,0.02)" stroke-width="1"/>
+        <path d="M 0 700 Q 960 680 1920 700" stroke="rgba(92,74,18,0.018)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="../assets/logo.png" alt="Logo" />
+        <span class="logo-text">[Client]</span>
+      </div>
+      <span class="slide-label">05 / 08</span>
+    </header>
+
+    <div class="content">
+      <!-- Block 1: Title area -->
+      <div class="title-area">
+        <h2 class="page-title">Four pillars that accelerate real capability</h2>
+        <p class="page-subtitle">Each component reinforces the others, creating a feedback loop between learning and doing.</p>
+      </div>
+
+      <!-- Block 2: Feature grid (2×2) -->
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <!-- People icon -->
+            <svg viewBox="0 0 44 44" fill="none" stroke="#5c4a12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="22" cy="14" r="6"/>
+              <path d="M10 36c0-6.627 5.373-12 12-12s12 5.373 12 12"/>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">Live Coaching Sessions</div>
+            <div class="feature-desc">Weekly 1:1 sessions focused on your actual workflows. Every meeting produces a deployed skill you use immediately.</div>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">
+            <!-- Calendar icon -->
+            <svg viewBox="0 0 44 44" fill="none" stroke="#5c4a12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="8" y="10" width="28" height="26" rx="3"/>
+              <line x1="8" y1="18" x2="36" y2="18"/>
+              <line x1="16" y1="6" x2="16" y2="14"/>
+              <line x1="28" y1="6" x2="28" y2="14"/>
+              <rect x="14" y="23" width="5" height="5" rx="1"/>
+              <rect x="25" y="23" width="5" height="5" rx="1"/>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">Weekly Community Practice</div>
+            <div class="feature-desc">Peer group sessions where participants share wins, troubleshoot blockers, and learn from each other's progress.</div>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">
+            <!-- Chat bubble icon -->
+            <svg viewBox="0 0 44 44" fill="none" stroke="#5c4a12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 10h28a2 2 0 012 2v16a2 2 0 01-2 2H18l-6 6v-6H8a2 2 0 01-2-2V12a2 2 0 012-2z"/>
+              <circle cx="16" cy="20" r="1.5" fill="#5c4a12" stroke="none"/>
+              <circle cx="22" cy="20" r="1.5" fill="#5c4a12" stroke="none"/>
+              <circle cx="28" cy="20" r="1.5" fill="#5c4a12" stroke="none"/>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">AI Support Agent</div>
+            <div class="feature-desc">A dedicated assistant trained on your context, available 24/7 for questions, practice prompts, and workflow guidance.</div>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">
+            <!-- Clock icon -->
+            <svg viewBox="0 0 44 44" fill="none" stroke="#5c4a12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="22" cy="22" r="14"/>
+              <polyline points="22,12 22,22 30,26"/>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">Recorded Curriculum</div>
+            <div class="feature-desc">On-demand modules covering foundational concepts, so live time focuses on application rather than explanation.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Block 3: Philosophy bar -->
+      <div class="philosophy-section">
+        <div class="philosophy-rule"></div>
+        <div class="philosophy-row">
+          <div class="philosophy-item">
+            <div class="philosophy-headline">Learn by doing.</div>
+            <div class="philosophy-desc">Every session produces real output, not theoretical exercises.</div>
+          </div>
+          <div class="philosophy-divider"></div>
+          <div class="philosophy-item">
+            <div class="philosophy-headline">Skills from day one.</div>
+            <div class="philosophy-desc">You deploy working tools in your first week, not your last.</div>
+          </div>
+          <div class="philosophy-divider"></div>
+          <div class="philosophy-item">
+            <div class="philosophy-headline">Your team grows together.</div>
+            <div class="philosophy-desc">Shared vocabulary and practice build collective capability.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">[Client] &middot; [Organization]</span>
+      <span class="footer-label">yourcompany.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Constellation — Architecture Diagram</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(92, 74, 18, 0.06) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 30%, rgba(10, 25, 41, 0.03) 0%, transparent 35%),
+        radial-gradient(ellipse at 80% 70%, rgba(10, 25, 41, 0.03) 0%, transparent 35%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .content {
+      padding: 20px 56px 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 10;
+    }
+
+    .diagram-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .insight-bar {
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 14px;
+      padding: 18px 28px;
+      text-align: center;
+    }
+    .insight-text {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--gold);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 16px 56px 48px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <ellipse cx="960" cy="540" rx="800" ry="350" stroke="rgba(92,74,18,0.035)" stroke-width="1" fill="none"/>
+        <ellipse cx="960" cy="540" rx="600" ry="250" stroke="rgba(92,74,18,0.025)" stroke-width="1" fill="none"/>
+        <ellipse cx="960" cy="540" rx="400" ry="150" stroke="rgba(92,74,18,0.018)" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="../assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">03 / 08</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">Shared Skills Become a Reusable Library Across Your Team</h2>
+    </div>
+
+    <div class="content">
+      <div class="diagram-wrap">
+        <svg width="1760" height="580" viewBox="0 0 1760 580">
+          <defs>
+            <!-- Skill tag gradient -->
+            <linearGradient id="skillTagGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="rgba(92, 74, 18, 0.08)"/>
+              <stop offset="100%" stop-color="rgba(92, 74, 18, 0.03)"/>
+            </linearGradient>
+
+            <!-- Hub gradient fill -->
+            <linearGradient id="hubFill" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="rgba(92, 74, 18, 0.07)"/>
+              <stop offset="100%" stop-color="rgba(92, 74, 18, 0.03)"/>
+            </linearGradient>
+
+            <!-- Node glow gradients -->
+            <radialGradient id="glowTopCenter">
+              <stop offset="0%" stop-color="rgba(92, 74, 18, 0.12)"/>
+              <stop offset="100%" stop-color="rgba(92, 74, 18, 0)"/>
+            </radialGradient>
+            <radialGradient id="glowUpperLeft">
+              <stop offset="0%" stop-color="rgba(92, 74, 18, 0.10)"/>
+              <stop offset="100%" stop-color="rgba(92, 74, 18, 0)"/>
+            </radialGradient>
+            <radialGradient id="glowUpperRight">
+              <stop offset="0%" stop-color="rgba(92, 74, 18, 0.10)"/>
+              <stop offset="100%" stop-color="rgba(92, 74, 18, 0)"/>
+            </radialGradient>
+            <radialGradient id="glowLowerLeft">
+              <stop offset="0%" stop-color="rgba(92, 74, 18, 0.10)"/>
+              <stop offset="100%" stop-color="rgba(92, 74, 18, 0)"/>
+            </radialGradient>
+            <radialGradient id="glowLowerRight">
+              <stop offset="0%" stop-color="rgba(92, 74, 18, 0.10)"/>
+              <stop offset="100%" stop-color="rgba(92, 74, 18, 0)"/>
+            </radialGradient>
+          </defs>
+
+          <!-- ========== LEGEND ========== -->
+          <rect x="20" y="16" width="100" height="32" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="70" y="37" font-family="Outfit, sans-serif" font-size="14" font-weight="500" fill="#5c4a12" text-anchor="middle">Skill</text>
+          <text x="132" y="37" font-family="Outfit, sans-serif" font-size="14" font-weight="400" fill="#3a5068">= Skill</text>
+
+          <!-- ========== DASHED CONNECTORS ========== -->
+          <!-- All connectors stop at the hub boundary -->
+
+          <!-- Team Lead (880, 75) → hub top edge (880, 205) -->
+          <line x1="880" y1="145" x2="880" y2="205" stroke="rgba(92, 74, 18, 0.40)" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+          <!-- Analyst A (220, 230) → hub left edge (580, 290) -->
+          <line x1="285" y1="230" x2="580" y2="270" stroke="rgba(92, 74, 18, 0.40)" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+          <!-- Analyst B (1540, 230) → hub right edge (1180, 290) -->
+          <line x1="1475" y1="230" x2="1180" y2="270" stroke="rgba(92, 74, 18, 0.40)" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+          <!-- Specialist A (220, 460) → hub left edge (580, 345) -->
+          <line x1="285" y1="460" x2="580" y2="345" stroke="rgba(92, 74, 18, 0.40)" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+          <!-- Specialist B (1540, 460) → hub right edge (1180, 345) -->
+          <line x1="1475" y1="460" x2="1180" y2="345" stroke="rgba(92, 74, 18, 0.40)" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+          <!-- ========== CENTRAL HUB ========== -->
+          <rect x="580" y="205" width="600" height="170" rx="20" fill="url(#hubFill)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="880" y="240" font-family="Outfit, sans-serif" font-size="16" font-weight="600" letter-spacing="0.15em" fill="#5c4a12" text-anchor="middle">SHARED SKILLS</text>
+
+          <!-- Skill tags inside hub — 2x2 grid -->
+          <!-- Row 1 -->
+          <rect x="630" y="258" width="220" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="740" y="284" font-family="Outfit, sans-serif" font-size="16" font-weight="500" fill="#5c4a12" text-anchor="middle">Document Review</text>
+
+          <rect x="870" y="258" width="220" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="980" y="284" font-family="Outfit, sans-serif" font-size="16" font-weight="500" fill="#5c4a12" text-anchor="middle">Report Formatting</text>
+
+          <!-- Row 2 -->
+          <rect x="630" y="314" width="220" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="740" y="340" font-family="Outfit, sans-serif" font-size="16" font-weight="500" fill="#5c4a12" text-anchor="middle">Data Analysis</text>
+
+          <rect x="870" y="314" width="220" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="980" y="340" font-family="Outfit, sans-serif" font-size="16" font-weight="500" fill="#5c4a12" text-anchor="middle">Quality Check</text>
+
+          <!-- ========== TEAM MEMBER NODES ========== -->
+
+          <!-- TOP CENTER: Team Lead -->
+          <circle cx="880" cy="75" r="85" fill="url(#glowTopCenter)"/>
+          <circle cx="880" cy="75" r="70" fill="#f5f3ee" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="880" y="70" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">Team</text>
+          <text x="880" y="90" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">Lead</text>
+
+          <!-- UPPER LEFT: Analyst A -->
+          <circle cx="220" cy="230" r="80" fill="url(#glowUpperLeft)"/>
+          <circle cx="220" cy="230" r="65" fill="#f5f3ee" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="220" y="225" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">Analyst</text>
+          <text x="220" y="245" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">A</text>
+          <!-- Personal skill tag -->
+          <rect x="100" y="310" width="240" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="220" y="336" font-family="Outfit, sans-serif" font-size="15" font-weight="500" fill="#5c4a12" text-anchor="middle">Financial Modeling</text>
+
+          <!-- UPPER RIGHT: Analyst B -->
+          <circle cx="1540" cy="230" r="80" fill="url(#glowUpperRight)"/>
+          <circle cx="1540" cy="230" r="65" fill="#f5f3ee" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="1540" y="225" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">Analyst</text>
+          <text x="1540" y="245" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">B</text>
+          <!-- Personal skill tag -->
+          <rect x="1420" y="310" width="240" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="1540" y="336" font-family="Outfit, sans-serif" font-size="15" font-weight="500" fill="#5c4a12" text-anchor="middle">Market Research</text>
+
+          <!-- LOWER LEFT: Specialist A (same x=220 as Analyst A) -->
+          <circle cx="220" cy="460" r="80" fill="url(#glowLowerLeft)"/>
+          <circle cx="220" cy="460" r="65" fill="#f5f3ee" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="220" y="455" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">Specialist</text>
+          <text x="220" y="475" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">A</text>
+          <!-- Personal skill tag -->
+          <rect x="100" y="540" width="240" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="220" y="566" font-family="Outfit, sans-serif" font-size="15" font-weight="500" fill="#5c4a12" text-anchor="middle">Compliance Audit</text>
+
+          <!-- LOWER RIGHT: Specialist B (same x=1540 as Analyst B) -->
+          <circle cx="1540" cy="460" r="80" fill="url(#glowLowerRight)"/>
+          <circle cx="1540" cy="460" r="65" fill="#f5f3ee" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="1540" y="455" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">Specialist</text>
+          <text x="1540" y="475" font-family="Outfit, sans-serif" font-size="17" font-weight="600" fill="#0a1929" text-anchor="middle">B</text>
+          <!-- Personal skill tag -->
+          <rect x="1420" y="540" width="240" height="42" rx="10" fill="url(#skillTagGrad)" stroke="rgba(92, 74, 18, 0.45)" stroke-width="1.5"/>
+          <text x="1540" y="566" font-family="Outfit, sans-serif" font-size="15" font-weight="500" fill="#5c4a12" text-anchor="middle">Client Outreach</text>
+        </svg>
+      </div>
+
+      <div class="insight-bar">
+        <span class="insight-text">One skill built once, used by the entire team — compounding returns on every hour invested.</span>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">[Client] &middot; [Organization]</span>
+      <span class="footer-label">yourcompany.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

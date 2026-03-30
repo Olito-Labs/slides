@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proof — Asymmetric Two-Track</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 35%, rgba(92, 74, 18, 0.07) 0%, transparent 45%),
+        radial-gradient(ellipse at 75% 70%, rgba(92, 74, 18, 0.05) 0%, transparent 35%),
+        radial-gradient(ellipse at 50% 10%, rgba(10, 25, 41, 0.03) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .page-subtitle {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      padding: 0 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Left panel — 38% */
+    .panel-left {
+      width: 38%;
+      padding-right: 64px;
+      padding-top: 48px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Center divider */
+    .center-divider {
+      width: 1.5px;
+      background: rgba(92, 74, 18, 0.20);
+      margin-top: 48px;
+      margin-bottom: 96px;
+      flex-shrink: 0;
+    }
+
+    /* Right panel — flex 1 */
+    .panel-right {
+      flex: 1;
+      padding-left: 64px;
+      padding-top: 48px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Panel headings */
+    .panel-heading {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1.1;
+    }
+    .panel-context {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .panel-rule {
+      width: 100%;
+      height: 1.5px;
+      background: rgba(92, 74, 18, 0.25);
+      margin: 20px 0 28px;
+    }
+
+    /* Stat rows */
+    .stat-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+    }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .stat-icon-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--gold-subtle);
+      border: 1.5px solid var(--gold-card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stat-icon-circle svg {
+      width: 24px;
+      height: 24px;
+    }
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-top: 2px;
+    }
+    .stat-context {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Quote bar */
+    .quote-bar {
+      border-top: 1.5px solid rgba(92, 74, 18, 0.25);
+      padding-top: 20px;
+      margin-top: 24px;
+    }
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .quote-attribution {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* Person rows */
+    .person-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      flex: 1;
+    }
+    .person-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .person-marker {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--gold-subtle);
+      border: 1.5px solid var(--gold-card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .person-marker svg {
+      width: 22px;
+      height: 22px;
+    }
+    .person-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .person-name-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .person-name {
+      font-family: var(--font-body);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .firm-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--gold-subtle);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 100px;
+      padding: 3px 14px;
+    }
+    .firm-badge svg {
+      width: 12px;
+      height: 12px;
+    }
+    .firm-badge-text {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .person-result {
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-top: 4px;
+    }
+    .person-result strong {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 16px 56px 48px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M 0 200 Q 480 180 960 200 Q 1440 220 1920 200" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+        <path d="M 0 600 Q 480 580 960 600 Q 1440 620 1920 600" stroke="rgba(92,74,18,0.02)" stroke-width="1"/>
+        <path d="M 0 900 Q 480 880 960 900 Q 1440 920 1920 900" stroke="rgba(92,74,18,0.018)" stroke-width="1"/>
+        <path d="M 700 0 Q 680 540 700 1080" stroke="rgba(92,74,18,0.022)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="../assets/logo.png" alt="Logo" />
+        <span class="logo-text">Olito Labs</span>
+      </div>
+      <span class="slide-label">07 / 08</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="page-title">Production Experience and Expert Coaching Across Industries</h2>
+      <p class="page-subtitle">Two tracks, one team. Real outcomes across both.</p>
+    </div>
+
+    <div class="content">
+      <!-- Left Panel: 38% -->
+      <div class="panel-left">
+        <div class="panel-heading">Managed Platform</div>
+        <div class="panel-context">Enterprise client, 6 months live</div>
+        <div class="panel-rule"></div>
+
+        <div class="stat-rows">
+          <div class="stat-row">
+            <div class="stat-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number">2,400</span>
+              <span class="stat-label">Hours Saved</span>
+              <span class="stat-context">Across operations and analysis</span>
+            </div>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number">$180K</span>
+              <span class="stat-label">Annual Savings</span>
+              <span class="stat-context">Measured against prior workflow cost</span>
+            </div>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number">45</span>
+              <span class="stat-label">Projects Managed</span>
+              <span class="stat-context">End-to-end, zero manual handoff</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-bar">
+          <div class="quote-text">"We stopped hiring for the role. The platform handles it better than any contractor we tried."</div>
+          <div class="quote-attribution">VP Operations, Enterprise Client</div>
+        </div>
+      </div>
+
+      <!-- Center Divider -->
+      <div class="center-divider"></div>
+
+      <!-- Right Panel: flex 1 -->
+      <div class="panel-right">
+        <div class="panel-heading">Coaching</div>
+        <div class="panel-context">15 professionals across 12 firms</div>
+        <div class="panel-rule"></div>
+
+        <div class="person-rows">
+          <div class="person-row">
+            <div class="person-marker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="person-info">
+              <div class="person-name-line">
+                <span class="person-name">CEO, Mid-Size Tech Firm</span>
+                <span class="firm-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                  <span class="firm-badge-text">Series B</span>
+                </span>
+              </div>
+              <div class="person-result">Built <strong>3 internal AI agents</strong> in 4 weeks. Replaced two vendor contracts, saving <strong>$95K annually</strong>.</div>
+            </div>
+          </div>
+
+          <div class="person-row">
+            <div class="person-marker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="person-info">
+              <div class="person-name-line">
+                <span class="person-name">Partner, Strategy Consultancy</span>
+                <span class="firm-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                  <span class="firm-badge-text">40-person firm</span>
+                </span>
+              </div>
+              <div class="person-result">Cut <strong>proposal turnaround from 5 days to 8 hours</strong>. Now training two associates on the same workflow.</div>
+            </div>
+          </div>
+
+          <div class="person-row">
+            <div class="person-marker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="person-info">
+              <div class="person-name-line">
+                <span class="person-name">Senior Associate, PE Fund</span>
+                <span class="firm-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2.5" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <span class="firm-badge-text">$2B AUM</span>
+                </span>
+              </div>
+              <div class="person-result">Automated <strong>deal screening pipeline</strong>. Reviews <strong>3x more inbound</strong> with the same team size.</div>
+            </div>
+          </div>
+
+          <div class="person-row">
+            <div class="person-marker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="person-info">
+              <div class="person-name-line">
+                <span class="person-name">Director, Global Bank</span>
+                <span class="firm-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#5c4a12" stroke-width="2.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                  <span class="firm-badge-text">Top 10 bank</span>
+                </span>
+              </div>
+              <div class="person-result">Deployed AI-assisted <strong>regulatory reporting workflow</strong>. Reduced compliance prep time by <strong>60%</strong>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">Olito Labs &middot; Track Record</span>
+      <span class="footer-label">olitolabs.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>

@@ -15,125 +15,124 @@ Before opening a single HTML file, build the storyline. A deck is an argument, n
 
 ### 1.1 Identify the Governing Thought
 
-Every deck answers one question. The governing thought is your **answer** — a single assertion, not a topic:
+Every deck answers one question. The governing thought is your **answer** — a single assertion, not a topic. If you can't write it in one sentence, you don't have a deck yet.
 
-> "We should invest in X because Y."
-> "The program accelerates your trajectory from Z to W."
-> "This quarter we accomplished A despite B."
-
-If you can't write it in one sentence, you don't have a deck yet — you have a topic.
-
-> **Answer-first principle:** State your conclusion before your evidence. The governing thought appears on the cover slide. The resolution appears in the first substantive slide, not the last. Every headline states the answer, never the question. Business audiences want the punchline immediately.
+> **Answer-first principle:** State your conclusion before your evidence. The governing thought appears on the cover slide. Every headline states the answer, never the question. Business audiences want the punchline immediately.
 
 The governing thought sits atop a **pyramid** (Minto Pyramid Principle):
+- **Vertical logic:** Each level answers "Why?" or "How?" from the level above
+- **Horizontal logic:** Arguments at the same level relate by deduction or induction
 
-```
-        Governing Thought
-       /        |        \
-  Key Line 1  Key Line 2  Key Line 3
-   /  |  \      /  |        /  |  \
- Data Data    Data Data    Data Data
-```
-
-**Vertical logic:** Each level answers "Why?" or "How?" from the level above.
-**Horizontal logic:** Arguments at the same level relate by deduction (A + B → therefore C) or induction (A, B, C share a pattern → conclusion).
-
-Key line arguments become your slide headlines. Supporting data becomes your slide bodies.
+Key line arguments become slide headlines. Supporting data becomes slide bodies.
 
 ### 1.2 Build the Ghost Deck (Dot-Dash Outline)
 
-Write one **headline** per slide (the "dot") and 2-4 **supporting points** (the "dashes") underneath. Ideal is 3 points (human working memory handles 3±1 items). Headlines are assertions, never labels (exception: section divider slides in 10+ slide decks may use topic labels).
+Write one **headline** per slide (the "dot") and 2-4 **supporting points** (the "dashes"). Headlines are assertions, never labels.
 
-**Bad:** "Market Overview"
-**Good:** "The market is shifting from compliance-driven to intelligence-driven"
+**Bad:** "Market Overview"  →  **Good:** "The market is shifting from compliance-driven to intelligence-driven"
 
-**Bad:** "Our Team"
-**Good:** "Three domain experts cover regulation, engineering, and go-to-market"
-
-Format:
-
-```
-SLIDE 1 (Cover):  [Deck title — governing thought as headline]
-SLIDE 2:  [First assertion that sets up the problem/context]
-  - Evidence point 1
-  - Evidence point 2
-  - Key data or quote
-SLIDE 3:  [Second assertion that deepens the problem]
-  - Supporting detail
-  - Contrasting data
-SLIDE 4:  [Pivot — the resolution or opportunity]
-  - How it works
-  - Why it's different
-...
-SLIDE N:  [Call to action or conclusion]
-  - Next step
-  - Contact / pricing
-```
-
-### 1.2b MECE Check
-
-Every level of your dot-dash must be **Mutually Exclusive, Collectively Exhaustive**:
-
-- **ME:** No two headlines argue the same point. No two dashes repeat evidence.
-- **CE:** Together, the headlines cover the full argument. No obvious gap a skeptic could point to.
-
-Test each group of bullets: "Do any overlap?" (merge them). "What's missing that a critic would ask about?" (add it). MECE structure is a credibility signal — executives use it as a proxy for analytical rigor.
-
-### 1.2c Slide Anatomy (Map During Dot-Dash)
-
-Each slide has four zones. Map them during planning, not after:
-
-| Zone | Content | Dot-Dash Mapping |
-|------|---------|-----------------|
-| **Action title** | Assertion headline (1-2 lines) | The "dot" |
-| **Subtitle** | Scope, qualifier | Optional — note if needed |
-| **Body/exhibit** | Chart, table, text proving the title | The "dashes" |
-| **Source line** | Data attribution | Note sources now — unsourced numbers destroy credibility |
+**MECE check:** Every level is Mutually Exclusive (no overlap) and Collectively Exhaustive (no gaps). Test: "Do any overlap?" (merge). "What's missing?" (add).
 
 ### 1.3 The Headline Test
 
-Read the headlines aloud in sequence as a paragraph. They should tell a coherent story without supporting detail. If the narrative breaks, restructure before building slides.
-
-For decks >10 slides, also read only the section-level key lines — they should form an executive summary.
-
-### 1.3b The "So What?" Test
-
-After the headline test passes, apply per-slide: read the headline, ask "So what? Why does this matter to the decision?" If you can't connect it to the governing thought in one sentence, cut the slide.
+Read headlines aloud in sequence as a paragraph. They should tell a coherent story without supporting detail. If the narrative breaks, restructure. Then apply the "So What?" test per-slide — if you can't connect it to the governing thought in one sentence, cut the slide.
 
 ### 1.4 Narrative Arcs
 
-Choose the arc that fits your deck type:
-
 | Arc | Pattern | Best For |
 |-----|---------|----------|
-| **SCR** | Situation → Complication → Resolution | Pitches, proposals, enrollment docs |
+| **SCR** | Situation → Complication → Resolution | Pitches, proposals, enrollment |
 | **SCQA** | Situation → Complication → Question → Answer | Board papers, decision memos |
 | **What-So What-Now What** | Finding → Implication → Action | Recap decks, session summaries |
-| **Before/During/After** | Past state → Transformation → Current state | Progress reports, case studies |
-| **Problem-Mechanism-Proof** | Pain → How we solve it → Evidence it works | Product decks, demos |
-| **Recommendation-Rationale-Risk** | What to do → Why → What could go wrong | Investment committee papers |
-
-For decks >10 slides, add an **executive summary slide** after the cover containing all key lines. This enables non-linear consumption — executives read the summary and dive into the section that interests them.
+| **Before/During/After** | Past → Transformation → Current | Progress reports, case studies |
+| **Problem-Mechanism-Proof** | Pain → How we solve it → Evidence | Product decks, demos |
 
 ### 1.5 Slide Type Assignment
 
-Tag each slide in your dot-dash with its visual type. This determines layout in Phase 2.
+Tag each slide in your dot-dash with its visual type. This determines layout in Phase 2. Choose the type that best serves the content — don't force content into a template.
 
-| Type | Use For | Elements |
-|------|---------|----------|
-| `cover` | Slide 1 always | Hero title, subtitle, badge, date |
-| `welcome` | Personalized openers | Two-column: greeting + note card |
-| `comparison` | Before/after, gap analysis | Two-column card stacks |
-| `pipeline` | Workflows, processes | Horizontal cards with connectors |
-| `data-matrix` | Feature grids, person-tool maps | Tabular layout with cells |
-| `cards` | Issues, pain points, benefits | Card grid (2-4 cards) |
-| `metrics` | Impact, results, KPIs | Hero numbers with context |
-| `recommendations` | Action plans, roadmaps | Phased list with CTA |
-| `diagram` | Architecture, network topology | SVG with floating labels |
+| Type | Use For | Key Elements |
+|------|---------|-------------|
+| `cover` | Slide 1 always | Hero title, subtitle, badge |
+| `skills-showcase` | Workflow demos, before/after | Two-column: narrative left, visual right |
+| `constellation` | Architecture, team structures, networks | SVG diagram: nodes + hub + connectors |
+| `timeline` | Journeys, stage progressions, roadmaps | Horizontal line with alternating above/below cards |
+| `feature-grid` | Program components, offerings | 2×2 icon grid + philosophy/tagline bar |
+| `team` | Coaches, founders, leadership | Circular photo crops + bios, vertical divider |
+| `proof-asymmetric` | Track record, case studies, social proof | Asymmetric columns (~38/62), panel headings + rules |
+| `investment` | Pricing, what's included, CTA | Items list + vertical divider + price card |
+| `comparison` | Gap analysis, before/after | Two equal columns with card stacks |
+| `metrics` | Impact, KPIs, results | Hero numbers with context labels |
+| `pipeline` | Workflows, processes | Horizontal stage cards with connectors |
+
+See `examples/` for reference implementations of each type. Copy the closest archetype, then customize — don't reproduce examples exactly. Each deck should feel designed for its specific audience.
 
 ---
 
 ## Phase 2: Slide Creation
+
+### 2.0 The Consistency Canon
+
+This is the most important section in the entire skill. When you flip through a professional deck, headers, titles, and footers don't move between slides. This creates a feeling of precision and polish that audiences register subconsciously. Inconsistency — even by a few pixels — looks amateurish.
+
+**Every content slide MUST use these exact values:**
+
+```css
+/* HEADER — identical on every slide */
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 48px 56px 0;
+  position: relative; z-index: 10;
+}
+.logo-cluster { display: flex; align-items: center; gap: 16px; }
+.logo-icon { height: 44px; width: auto; }
+.logo-text {
+  font-family: var(--font-body); font-size: 18px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted);
+}
+.slide-label {
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
+}
+
+/* TITLE + SUBTITLE — same position, same size, every slide */
+.page-title {
+  font-family: var(--font-display); font-size: 48px; font-weight: 300;
+  color: var(--text-primary); margin-bottom: 6px; letter-spacing: -0.01em;
+}
+.page-subtitle {
+  font-family: var(--font-body); font-size: 22px; font-weight: 400;
+  color: var(--text-muted); margin-bottom: 28px;
+}
+
+/* CONTENT AREA — always 56px horizontal padding */
+.content {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 20px 56px 0;
+  position: relative; z-index: 10;
+}
+
+/* FOOTER — identical on every slide */
+.footer {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 16px 56px 48px;
+  position: relative; z-index: 10;
+}
+.footer-label {
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
+}
+```
+
+**Non-negotiable rules:**
+- Title is ALWAYS 48px Cormorant Garamond weight 300. Never vary between slides.
+- Content horizontal padding is ALWAYS 56px. Never use 96px, 80px, or any other value.
+- Subtitle is ALWAYS 22px Outfit weight 400. Never 20px, never 18px.
+- The slide-label shows page number: "03 / 08" format.
+- Footer left = "[Person] · [Organization]", footer right = "[website]"
+- Header padding-top is 48px. Content padding-top is 20px. Footer padding-bottom is 48px.
+
+**Titles should be descriptive assertions, not labels.** "What the Program Looks Like" is a label. "The Program Structure: Live Coaching, Community, and 24/7 AI Support" is an assertion that tells you what the slide says without reading further.
 
 ### 2.1 Color Palette (Light Mode)
 
@@ -141,7 +140,7 @@ Tag each slide in your dot-dash with its visual type. This determines layout in 
 :root {
   --bg: #f5f3ee;                      /* warm cream — never pure #ffffff */
   --gold: #5c4a12;                    /* primary accent — 8:1 contrast */
-  --gold-light: #4a3d10;             /* emphasis text — 10:1 contrast */
+  --gold-light: #4a3d10;
   --gold-glow: rgba(92, 74, 18, 0.12);
   --gold-subtle: rgba(92, 74, 18, 0.06);
   --gold-border: rgba(92, 74, 18, 0.40);
@@ -149,7 +148,7 @@ Tag each slide in your dot-dash with its visual type. This determines layout in 
   --gold-card-border: rgba(92, 74, 18, 0.25);
   --card-fill: rgba(10, 25, 41, 0.05);
   --card-border: rgba(10, 25, 41, 0.12);
-  --text-primary: #0a1929;           /* near-black navy */
+  --text-primary: #0a1929;
   --text-secondary: #162d48;
   --text-muted: #3a5068;
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -157,161 +156,73 @@ Tag each slide in your dot-dash with its visual type. This determines layout in 
 }
 ```
 
-**Rules:**
-- Background is `#f5f3ee` (warm cream), never pure white — prevents washed-out look
-- No red/green/traffic-light colors. Differentiate with gold intensity levels only
-- Card fills: navy-tinted `rgba(10,25,41, 0.05-0.06)` or gold-tinted `rgba(92,74,18, 0.05-0.09)`
-- Card borders: 1.5px width always. `rgba(10,25,41, 0.12-0.15)` or `rgba(92,74,18, 0.25-0.45)`
+Background is `#f5f3ee`, never pure white. No red/green. Card fills: `rgba` at 0.05-0.09 opacity. Borders: always 1.5px.
 
 ### 2.2 Typography
 
-**All sizes in px. Never rem.**
-
-Font weights are bumped +100 from dark-mode equivalents for light-background legibility.
-
-**Executive slides** (3-6 elements, "back of the room" readable):
+**All sizes in px. Never rem.** Font weights bumped +100 from dark-mode equivalents.
 
 | Element | Size | Font | Weight |
 |---------|------|------|--------|
-| Hero title (cover) | 80-92px | Cormorant Garamond | 300 |
-| Slide title | 48-64px | Cormorant Garamond | 300 |
-| Card/section titles | 36-48px | Outfit | 500-600 |
-| Body text | 28-36px | Outfit | 400-500 |
-| Labels, badges | 18-22px | Outfit | 500-600 |
-
-**Data-dense slides** (matrices, pipelines, 4+ columns, 20+ cells):
-
-| Element | Size | Notes |
-|---------|------|-------|
-| Chrome (footer, stat labels) | 11-14px | Glanced, not read |
-| Cell text, descriptions | 14-18px | Main content |
-| Section/card titles | 28-36px | Hierarchy markers |
-| Slide title | 48-56px | Consistent |
-
-**Emphasis:** `font-weight: 500; font-style: italic; color: var(--gold);`
+| Hero title (cover only) | 80-92px | Cormorant Garamond | 300-500 |
+| Page title (all content slides) | 48px | Cormorant Garamond | 300 |
+| Panel/section headings | 36-44px | Cormorant Garamond | 400 |
+| Card titles | 26-34px | Outfit | 600-700 |
+| Body text | 18-22px | Outfit | 400 |
+| Labels, badges | 12-15px | Outfit | 600-700 |
 
 ### 2.3 Slide Skeleton
 
-Every slide is a self-contained HTML file with inline `<style>`. No external CSS.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[Slide Title]</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { /* palette from Section 2.1 */ }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 1920px; height: 1080px; overflow: hidden; }
-    .slide {
-      width: 1920px; height: 1080px;
-      background: var(--bg);
-      position: relative;
-      display: flex; flex-direction: column;
-    }
-    /* ... slide-specific styles ... */
-  </style>
-</head>
-<body>
-  <div class="slide">
-    <div class="ambient"></div>
-    <div class="contours">
-      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
-        <!-- subtle contour lines -->
-      </svg>
-    </div>
-    <div class="corner tl"></div>
-    <div class="corner br"></div>
-    <header class="header">
-      <div class="logo-cluster">
-        <img class="logo-icon" src="assets/logo.png" alt="Logo" />
-        <span class="logo-text">COMPANY NAME</span>
-      </div>
-      <span class="header-meta">[Context]</span>
-    </header>
-    <main class="content">
-      <!-- Slide content -->
-    </main>
-    <footer class="footer">
-      <span class="footer-label">[Left context]</span>
-      <span class="footer-label">[Right context]</span>
-    </footer>
-  </div>
-</body>
-</html>
-```
+Every slide is a self-contained HTML file with inline `<style>`. No external CSS. See `examples/` for complete implementations. The skeleton follows the Consistency Canon (§2.0) exactly.
 
 ### 2.4 Signature Design Elements
 
-**Corner frames:** L-shaped brackets at top-left and bottom-right.
-- Cover: 100px arms, 40px offset from edge, 1.5px stroke
-- Content: 80-100px arms, 32-40px offset, 1.5px stroke
+**Corner frames:** L-shaped brackets at top-left and bottom-right. 100px arms, 40px offset, 1.5px stroke, `var(--gold-border)`.
 
-```css
-.corner { position: absolute; width: 100px; height: 100px;
-  border-color: var(--gold-border); border-style: solid; border-width: 0; }
-.corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
-.corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
-```
-
-**Ambient gradients:** Layered radial gradients on `.ambient` div. Gold-tinted default, vary per slide.
-
-```css
-.ambient {
-  position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse at 35% 50%, rgba(92,74,18,0.07) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 30%, rgba(10,25,41,0.04) 0%, transparent 40%);
-}
-```
+**Ambient gradients:** Layered radial gradients on `.ambient` div. Gold-tinted default, vary per slide for visual interest.
 
 **Contour lines:** Subtle SVG quadratic bezier curves at very low opacity (0.02-0.04).
 
-**Gold divider:** `linear-gradient(90deg, transparent, var(--gold), transparent)` — 120px wide, 2px tall.
+**Gold divider:** `linear-gradient(90deg, transparent, var(--gold), transparent)` — 120px wide, 1.5px tall.
 
-**Badges/pills:** `border-radius: 100px`, gold fill or subtle fill + gold border, with 8px solid dot.
+**Circular photo crops:** Use `clip-path: circle(50%)` with `background: transparent`. Never use `border-radius: 50%` + `overflow: hidden` alone — it fails in Puppeteer PDF rendering, creating visible square artifacts behind photos.
 
-### 2.5 Design Rules
+### 2.5 Layout Patterns
 
-1. **All px, never rem** — every size, padding, and gap
-2. **No partial borders** — full `border: 1.5px solid` or no border. Never `border-left` only
-3. **Subtle fills only** — `rgba(gold, 0.03-0.09)` backgrounds. No opaque fills
-4. **Fill vertical space** — `flex: 1` on content. Bottom 30% must have content. Center vertically when natural
-5. **Corner clearance** — header/footer must clear corner brackets. Header top >= corner offset + 8px
-6. **SVG connectors edge-to-edge** — lines between boxes start at edge, not center. Calculate actual intersection points, not center-to-center
-7. **No overlapping elements** — process lines, decorative elements, connecting graphics must not overlap text or titles. Never use a `::before` pseudo-element spanning full width at a fixed `top` — it will cut through content. Use discrete SVG arrows in gaps between columns instead
-8. **Executive body text minimum 22px** on 1920x1080. Labels >= 18px (chrome/footer exempt at 14-16px for data-dense). Titles >= 28px. Absolute floor: **16px**
-9. **White space for breathing, not emptiness** — if cards have >40% empty space, increase font sizes or reduce card count
-10. **Redundant visual encoding** — every zone communicates through >=2 visual channels (color + shape minimum)
-11. **Zone-specific shape language** — border-radius is semantic: sharp (8-10px) = urgency, measured (14-16px) = precision, rounded (20px) = resolution, generous (24px) = comfort
-12. **Phone readability** — decks reviewed on phones at ~0.2x scale. Fewer words at larger sizes > dense small text
+These patterns recur across slide types. Understanding them helps you compose new layouts.
 
-### 2.5b Anti-Patterns (Avoid These)
+**Vertical distribution with `space-between`:** When a slide has 3 logical sections (title area, body, tagline/philosophy), wrap them in a flex column with `justify-content: space-between`. This distributes vertical space evenly without manual padding.
 
-These are learned from production use. Every rule here fixes a real failure mode.
+**Asymmetric columns (38/62 or 40/60):** When one column has significantly more content, give it proportionally more space. Use a `1.5px` vertical gold divider between them (a separate div, not a border — borders can't be shortened). Control divider height with `margin-top` and `margin-bottom`.
 
-13. **No eyebrow labels above titles** — uppercase category labels like "HOW IT WORKS" or "WHY IT WORKS" above the slide title are AI slop. The title should speak for itself. Cut the eyebrow entirely
-14. **No pill/bubble tags** — monospace pills listing outputs ("Governing thought", "MECE check") look like generic dashboards, not professional slides. Use full sentences in bullet descriptions instead
-15. **Text must fill its container** — the single most common failure. If a card's text occupies less than 60% of the card's area, either increase font sizes, add content, or remove the card. Small text in a big box looks unfinished
-16. **Remove cards when content works without them** — swatches + text often look better floating on the background than trapped inside bordered rectangles. Cards are for grouping, not decoration. If the content has its own visual structure (icons, font previews, color swatches), it doesn't need a box
-17. **Vertical distribution** — wrap the main content area in `flex: 1; justify-content: center` so content sits in the vertical middle of the slide. Never bunch everything at the top with 40%+ empty space below
-18. **Section subheadings** — when dividing a slide into sections, use a left-aligned Cormorant heading with a gold gradient line extending to the right (`linear-gradient(90deg, var(--gold-border), transparent)`). Never use centered italic text as a section break
-19. **Consistent title placement** — all content slides must use the same title font-size (48px) and padding (`20px 56px 0`). Inconsistent title sizes across slides in a deck look amateurish
-20. **Sentences over fragments** — bullet descriptions should be complete thoughts that explain what happens, not just keyword labels. "Build a dot-dash outline with assertion headlines and supporting evidence" beats "Dot-dash outline"
-21. **Map structure to content** — when showing categorized information, group items under their category with visual anchors (left-border accents, column grouping, intensity gradients). Don't flatten hierarchical data into a generic grid
+**Panel headings with horizontal rules:** For sections within a slide (like "Managed Agent" and "Coaching"), use large Cormorant display headings (42-44px) followed by a context line (20px Outfit muted), then a full-width `1.5px` horizontal rule at `opacity: 0.25`. This replaces background boxes — cleaner, more professional.
 
-### 2.6 Branding (Customizable)
+**SVG geometry in padded containers:** The `.content` div has 56px horizontal padding, making internal elements 1808px wide (not 1920px). When placing SVG elements with absolute coordinates, all x-positions are relative to the 1808px content box, not the slide. Card at `left: 0` in a padded content div = 56px from slide edge.
 
-Default ships with Olito Labs assets. To use your own:
+### 2.6 Design Rules
 
-1. Replace `assets/logo.png` with your logo (transparent PNG, ~44px height rendered)
-2. Update `.logo-text` content in each slide's HTML
-3. Adjust `--gold` family to your brand's accent color (maintain >= 7:1 contrast ratio on `#f5f3ee`)
+1. **All px, never rem** — every size, padding, gap
+2. **No partial borders** — full `border: 1.5px solid` or no border. Exception: corner brackets (§2.4) use directional borders by design
+3. **Subtle fills only** — `rgba(gold, 0.03-0.09)`. No opaque fills
+4. **Fill vertical space** — `flex: 1` on content. Bottom 30% must have content
+5. **Corner clearance** — header/footer clear corner brackets
+6. **SVG connectors edge-to-edge** — lines end at box boundaries, not centers or inside boxes
+7. **No overlapping elements** — lines/decorations must not cross text
+8. **Body text minimum 18px** on 1920x1080. Labels >= 12px. Titles >= 28px
+9. **Card text fills 60%+ of card area** — small text in big boxes looks unfinished
+10. **No eyebrow labels** — uppercase category text above titles is AI slop
+11. **Titles are assertions** — "What the Program Looks Like" → "The Program Structure: Live Coaching, Community, and 24/7 AI Support"
+12. **Consistency is king** — see §2.0. Same title size, same padding, same footer on every slide
+13. **No em dashes in slide text** — use commas, periods, or colons instead. Em dashes read as informal
+14. **Photos use `clip-path: circle(50%)`** — not `border-radius` + `overflow: hidden`
+15. **Remove boxes when content works without them** — horizontal rules under headings are cleaner than bordered rectangles
+
+### 2.7 Branding (Customizable)
+
+Default ships with Olito Labs assets. To customize:
+1. Replace `assets/olito-brain.png` with your logo (transparent PNG, ~44px height)
+2. Update `.logo-text` in each slide
+3. Adjust `--gold` family to your accent (maintain >= 7:1 contrast on `#f5f3ee`)
 4. Update footer text
 
 ---
@@ -321,102 +232,92 @@ Default ships with Olito Labs assets. To use your own:
 ### 3.1 Prerequisites
 
 ```bash
-cd ~/.claude/skills/slides/scripts && npm install
+cd ~/.claude/skills/olito-pdf/scripts && npm install
+brew install ghostscript  # for PDF compression
 ```
 
 ### 3.2 Generate PDF
 
-**Combined deck (most common):**
 ```bash
-node ~/.claude/skills/slides/scripts/generate-pdf.js \
-  --input /path/to/slides/directory \
+# Combined deck (most common)
+node ~/.claude/skills/olito-pdf/scripts/generate-pdf.js \
+  --input /path/to/slides/ \
   --output /path/to/deck.pdf \
-  --order slide_01_cover.html,slide_02_content.html,slide_03_data.html
-```
+  --order slide_01.html,slide_02.html,slide_03.html
 
-**Single slide:**
-```bash
-node ~/.claude/skills/slides/scripts/generate-pdf.js \
+# Single slide
+node ~/.claude/skills/olito-pdf/scripts/generate-pdf.js \
   --input /path/to/slide.html \
   --output /path/to/slide.pdf
 ```
 
-**Individual PDFs:**
+### 3.3 Compressed Shareable Version
+
+Full PDFs from Puppeteer are 10-15MB (2x device scale). For email/sharing, compress with Ghostscript:
+
 ```bash
-node ~/.claude/skills/slides/scripts/generate-pdf.js \
-  --input /path/to/slides/directory \
-  --output /path/to/output/directory \
-  --individual
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 \
+  -dPDFSETTINGS=/ebook \
+  -dColorImageResolution=200 -dGrayImageResolution=200 \
+  -dDownsampleColorImages=true -dDownsampleGrayImages=true \
+  -dColorImageDownsampleType=/Bicubic -dGrayImageDownsampleType=/Bicubic \
+  -dNOPAUSE -dBATCH -dQUIET \
+  -sOutputFile="DeckName-Shareable.pdf" full-deck.pdf
 ```
 
-### 3.3 How It Works
+This reduces 14MB → ~600KB while preserving photo/logo quality at 200dpi. Name the compressed version descriptively (e.g., `AgentNativeProgram-NERA.pdf`).
 
-- Puppeteer with Chrome's unified headless mode (v22+)
-- `emulateMediaType('screen')` to preserve CSS gradients and ambient glows
-- 1920x1080 viewport at 2x device scale factor
-- Slides merged via pdf-lib for combined decks
+### 3.4 Rendering Notes
 
-### 3.4 What Renders Correctly
-
-CSS gradients, ambient glows, Google Fonts, SVG graphics, backdrop filters.
-
-### 3.5 Avoid in Slides
-
-- SVG `feTurbulence` noise filters (render as visible dots)
-- Complex CSS filters on large areas
-- Animations (static snapshot taken)
-
-For troubleshooting, see `references/troubleshooting.md`.
+- Puppeteer uses `emulateMediaType('screen')` to preserve CSS gradients
+- 1920x1080 viewport at 2x device scale
+- Google Fonts, SVG, gradients, backdrop filters all render correctly
+- Avoid: `feTurbulence` noise filters, complex CSS filters on large areas, animations
 
 ---
 
 ## Validation Checklist
 
-Run after every slide, before PDF export. Fix ALL before proceeding.
+Run after every slide, before PDF export.
 
-- [ ] **No rem/em** in any font-size — all px
-- [ ] **No partial borders** — no `border-left` or `border-top` only
-- [ ] **Within 1920x1080** — header + title + content + footer <= 1080
-- [ ] **Footer visible** — not pushed offscreen
-- [ ] **Corner clearance** — logo and page number never overlap corner lines
-- [ ] **Vertical space filled** — bottom 30% has content
-- [ ] **Font sizes match mode** — executive body >= 22px, data-dense body >= 14px
-- [ ] **Card fills visible** — fills distinct from `#f5f3ee` background (opacity >= 0.05)
-- [ ] **1.5px borders** — not 1px (disappears on light backgrounds)
-- [ ] **No red/green** — only gold intensity levels for differentiation
-- [ ] **SVG connectors edge-to-edge** — no lines piercing through boxes
-- [ ] **Redundant visual encoding** — each zone has >= 2 visual signals
-- [ ] **Palette correct** — bg is `#f5f3ee`, gold is `#5c4a12`, text-primary is `#0a1929`
-- [ ] **No overlapping elements** — process lines and decorative graphics clear all text
-- [ ] **Class names correct** — `.slide` not `.of-slide-container`, `.header` not `.slide-header`
-- [ ] **No eyebrow labels** — no uppercase category text above the title
-- [ ] **Text fills containers** — card text occupies 60%+ of card area. No small text in big boxes
-- [ ] **Titles consistent** — all content slides use 48px title at same padding position
-- [ ] **Content vertically centered** — main area uses flex centering, not top-bunched
-
-### Post-PDF Quality Check
-
-After generating the PDF, verify:
-
-- [ ] Ambient glow visible and smooth (no banding)
-- [ ] Background clean (no speckles or artifacts)
-- [ ] Fonts loaded correctly (not fallback system fonts)
-- [ ] All content fits within slide bounds (nothing cropped)
-- [ ] Colors match browser preview
+- [ ] Title is 48px Cormorant weight 300, padding `20px 56px 0` — identical to every other slide
+- [ ] Subtitle is 22px Outfit weight 400 — identical to every other slide
+- [ ] Header padding is `48px 56px 0` with logo-cluster left, slide-label right
+- [ ] Footer padding is `16px 56px 48px` with context left, URL right
+- [ ] Content horizontal padding is 56px (never 96px, 80px, etc.)
+- [ ] No rem/em in any font-size — all px
+- [ ] No partial borders — no `border-left` only
+- [ ] Within 1920x1080 — nothing overflows
+- [ ] Vertical space filled — bottom 30% has content
+- [ ] Font sizes match spec — body >= 18px, labels >= 12px
+- [ ] Card fills distinct from background (opacity >= 0.05)
+- [ ] Borders are 1.5px (not 1px — disappears on light backgrounds)
+- [ ] No red/green — only gold intensity levels
+- [ ] SVG connectors end at box boundaries, not inside boxes
+- [ ] Photos use `clip-path: circle(50%)`, not `border-radius` + `overflow: hidden`
+- [ ] Palette: bg `#f5f3ee`, gold `#5c4a12`, text-primary `#0a1929`
+- [ ] No eyebrow labels or em dashes
 
 ---
 
 ## Reference Examples
 
-Before building any slide, read the closest archetype from `examples/`. Copy its structure, then customize.
+Before building any slide, read the closest archetype from `examples/`. Copy its structure, then customize for your content and audience.
 
-| Example | Archetype | Use When Building... |
-|---------|-----------|---------------------|
-| `slide_01_cover.html` | Cover | Title slides, deck openers |
-| `slide_02_content.html` | Two-column comparison | Gap analysis, before/after, welcome slides |
-| `slide_03_data.html` | Card grid with metrics | Impact slides, KPIs, pain points, benefits |
-| `slide_04_pipeline.html` | Horizontal pipeline | Workflows, processes, stage progressions, timelines |
-| `slide_05_recommendations.html` | Recommendations + CTA | Action plans, investment slides, enrollment, pricing |
+| Example | Type | Demonstrates |
+|---------|------|-------------|
+| `slide_01_cover.html` | Cover | Hero title, badge, ambient gradients |
+| `slide_02_content.html` | Skills showcase | Two-column narrative + visual |
+| `slide_03_data.html` | Metrics grid | Hero numbers, insight strip |
+| `slide_04_pipeline.html` | Pipeline | Horizontal stages with connectors |
+| `slide_05_recommendations.html` | Investment/CTA | Items list + price card |
+| `slide_06_timeline.html` | Timeline | Alternating above/below cards on horizontal axis |
+| `slide_07_feature_grid.html` | Feature grid | 2×2 icon grid + philosophy tagline bar |
+| `slide_08_team.html` | Team | Circular photo crops + bios, center divider |
+| `slide_09_proof.html` | Proof (asymmetric) | 38/62 split, panel headings, horizontal rules |
+| `slide_10_constellation.html` | Constellation | SVG hub + nodes + dashed connectors |
+
+Each example is anonymized and uses placeholder content. The layout patterns, CSS structure, and spacing are what matter — not the specific text.
 
 ---
 
@@ -427,15 +328,17 @@ Before building any slide, read the closest archetype from `examples/`. Copy its
    └─ Write governing thought
    └─ Build dot-dash outline (headlines + evidence)
    └─ Run headline test (read headlines only — does the story hold?)
-   └─ Assign slide types
+   └─ Assign slide types from §1.5
 
 2. BUILD (Phase 2)
+   └─ Apply Consistency Canon (§2.0) — header/title/subtitle/footer identical on every slide
    └─ Copy closest example archetype per slide
    └─ Copy assets/ into your deck directory
-   └─ Customize content, following palette + typography + design rules
+   └─ Customize content (layout patterns from §2.5, rules from §2.6)
    └─ Run validation checklist per slide
 
 3. EXPORT (Phase 3)
-   └─ Generate combined PDF
+   └─ Generate combined PDF via Puppeteer
+   └─ Compress with Ghostscript for sharing (~95% size reduction)
    └─ Verify: fonts, gradients, space utilization, readability
 ```

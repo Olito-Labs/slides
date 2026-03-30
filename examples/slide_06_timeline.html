@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timeline — Stage Progression</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --gold: #5c4a12;
+      --gold-light: #4a3d10;
+      --gold-glow: rgba(92, 74, 18, 0.12);
+      --gold-subtle: rgba(92, 74, 18, 0.06);
+      --gold-border: rgba(92, 74, 18, 0.40);
+      --gold-card-fill: rgba(92, 74, 18, 0.06);
+      --gold-card-border: rgba(92, 74, 18, 0.25);
+      --card-fill: rgba(10, 25, 41, 0.05);
+      --card-border: rgba(10, 25, 41, 0.12);
+      --text-primary: #0a1929;
+      --text-secondary: #162d48;
+      --text-muted: #3a5068;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 40% 50%, rgba(92, 74, 18, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 35%, rgba(10, 25, 41, 0.04) 0%, transparent 40%),
+        radial-gradient(ellipse at 20% 75%, rgba(92, 74, 18, 0.05) 0%, transparent 35%);
+      pointer-events: none;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .contours svg { width: 100%; height: 100%; }
+
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-color: var(--gold-border);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner.tl { top: 40px; left: 40px; border-top-width: 1.5px; border-left-width: 1.5px; }
+    .corner.br { bottom: 40px; right: 40px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-cluster { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { height: 44px; width: auto; }
+    .slide-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .title-block {
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px 56px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ── Timeline Layout ──────────────────────────────────
+       Usable width = 1920 - 56 - 56 = 1808px
+       5 circles evenly spaced across 1808px:
+         circle spacing = 1808 / 4 = 452px
+         positions: 0, 452, 904, 1356, 1808
+       Content area height is dynamic via flex:1.
+       Timeline line at vertical midpoint of content area.
+       Cards above: stages 0, 2, 4
+       Cards below: stages 1, 3
+       Edge cards (0, 4) are clamped so they don't overflow.
+    ───────────────────────────────────────────────────── */
+
+    .timeline {
+      position: relative;
+      width: 1808px;
+      height: 100%;
+    }
+
+    /* Gold horizontal line connecting all circles */
+    .timeline-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    /* Numbered circles on the line */
+    .circle {
+      position: absolute;
+      top: 50%;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+    .circle-num {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .circle-0 { left: 0px; }
+    .circle-1 { left: 452px; }
+    .circle-2 { left: 904px; }
+    .circle-3 { left: 1356px; }
+    .circle-4 { left: 1808px; }
+
+    /* Dashed connectors (vertical lines from circles to cards) */
+    .connector {
+      position: absolute;
+      width: 0;
+      border-left: 1.5px dashed rgba(92, 74, 18, 0.45);
+      z-index: 3;
+    }
+    /* Above connectors: from circle top (50% - 26px) up to card bottom (50% - 46px) = 20px tall */
+    .connector-above {
+      top: calc(50% - 46px);
+      height: 20px;
+    }
+    /* Below connectors: from circle bottom (50% + 26px) down to card top (50% + 46px) = 20px tall */
+    .connector-below {
+      top: calc(50% + 26px);
+      height: 20px;
+    }
+
+    .conn-0 { left: 0px; }
+    .conn-1 { left: 452px; }
+    .conn-2 { left: 904px; }
+    .conn-3 { left: 1356px; }
+    .conn-4 { left: 1808px; }
+
+    /* Cards */
+    .timeline-card {
+      position: absolute;
+      width: 360px;
+      background: var(--gold-card-fill);
+      border: 1.5px solid var(--gold-card-border);
+      border-radius: 16px;
+      padding: 20px 22px 18px;
+      z-index: 4;
+    }
+
+    /* Above cards: bottom edge at 50% - 46px */
+    .card-above {
+      bottom: calc(50% + 46px);
+    }
+    /* Below cards: top edge at 50% + 46px */
+    .card-below {
+      top: calc(50% + 46px);
+    }
+
+    /* Card horizontal positions — centered on circle, clamped at edges
+       Card 0: circle at 0, centered = -180. Clamp to 0.
+       Card 1: circle at 452, centered = 272.
+       Card 2: circle at 904, centered = 724.
+       Card 3: circle at 1356, centered = 1176.
+       Card 4: circle at 1808, centered = 1628. Clamp to 1448 (1808-360).
+    */
+    .card-0 { left: 0px; }
+    .card-1 { left: 272px; }
+    .card-2 { left: 724px; }
+    .card-3 { left: 1176px; }
+    .card-4 { left: 1448px; }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .card-body {
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .card-sep-label {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .card-separator {
+      width: 100%;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--gold-card-border), transparent);
+      margin-bottom: 8px;
+    }
+
+    .card-outcome {
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 16px 56px 48px;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <div class="ambient"></div>
+    <div class="contours">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" fill="none">
+        <path d="M -50 350 Q 480 420 960 400 Q 1440 380 1970 350" stroke="rgba(92,74,18,0.025)" stroke-width="1"/>
+        <path d="M -50 720 Q 480 660 960 680 Q 1440 700 1970 720" stroke="rgba(92,74,18,0.02)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header class="header">
+      <div class="logo-cluster">
+        <img class="logo-icon" src="../assets/logo.png" alt="Logo" />
+      </div>
+      <span class="slide-label">04 / 08</span>
+    </header>
+
+    <div class="title-block">
+      <h2 class="title">Five Evidence-Based Stages to Proficiency</h2>
+      <p class="subtitle">Each stage builds on the last. Progress at your own pace.</p>
+    </div>
+
+    <div class="content">
+      <div class="timeline">
+        <!-- Horizontal gold line -->
+        <div class="timeline-line"></div>
+
+        <!-- Dashed vertical connectors -->
+        <div class="connector connector-above conn-0"></div>
+        <div class="connector connector-below conn-1"></div>
+        <div class="connector connector-above conn-2"></div>
+        <div class="connector connector-below conn-3"></div>
+        <div class="connector connector-above conn-4"></div>
+
+        <!-- Numbered circles -->
+        <div class="circle circle-0"><span class="circle-num">0</span></div>
+        <div class="circle circle-1"><span class="circle-num">1</span></div>
+        <div class="circle circle-2"><span class="circle-num">2</span></div>
+        <div class="circle circle-3"><span class="circle-num">3</span></div>
+        <div class="circle circle-4"><span class="circle-num">4</span></div>
+
+        <!-- Stage 0: Foundation — Above -->
+        <div class="timeline-card card-above card-0">
+          <div class="card-title">Foundation</div>
+          <div class="card-body">Establish baseline capabilities. Map current workflows, identify highest-leverage opportunities, set measurable goals.</div>
+          <div class="card-sep-label">You walk away with</div>
+          <div class="card-separator"></div>
+          <div class="card-outcome">A prioritized action plan targeting your top three workflows.</div>
+        </div>
+
+        <!-- Stage 1: First Build — Below -->
+        <div class="timeline-card card-below card-1">
+          <div class="card-title">First Build</div>
+          <div class="card-body">Create your first production-ready skill. Hands-on, guided implementation solving a real problem.</div>
+          <div class="card-sep-label">You walk away with</div>
+          <div class="card-separator"></div>
+          <div class="card-outcome">A deployed skill generating measurable time savings.</div>
+        </div>
+
+        <!-- Stage 2: Advanced — Above -->
+        <div class="timeline-card card-above card-2">
+          <div class="card-title">Advanced</div>
+          <div class="card-body">Layer complexity: multi-step workflows, external integrations, quality gates, and error handling patterns.</div>
+          <div class="card-sep-label">You walk away with</div>
+          <div class="card-separator"></div>
+          <div class="card-outcome">A compound skill that chains multiple capabilities together.</div>
+        </div>
+
+        <!-- Stage 3: Integration — Below -->
+        <div class="timeline-card card-below card-3">
+          <div class="card-title">Integration</div>
+          <div class="card-body">Connect skills into a coherent operating system. Establish feedback loops, monitoring, and continuous improvement.</div>
+          <div class="card-sep-label">You walk away with</div>
+          <div class="card-separator"></div>
+          <div class="card-outcome">An integrated system of skills working in concert.</div>
+        </div>
+
+        <!-- Stage 4: Mastery — Above -->
+        <div class="timeline-card card-above card-4">
+          <div class="card-title">Mastery</div>
+          <div class="card-body">Operate independently. Design new skills from scratch, teach others, and evolve your system as tools change.</div>
+          <div class="card-sep-label">You walk away with</div>
+          <div class="card-separator"></div>
+          <div class="card-outcome">Full autonomy to build, iterate, and scale without guidance.</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-label">[Client Name] &middot; [Organization]</span>
+      <span class="footer-label">yourcompany.com</span>
+    </footer>
+  </div>
+</body>
+
+</html>
