@@ -162,14 +162,21 @@ Background is `#f5f3ee`, never pure white. No red/green. Card fills: `rgba` at 0
 
 **All sizes in px. Never rem.** Font weights bumped +100 from dark-mode equivalents.
 
+On a 1920x1080 slide, 18-20px body text looks **tiny** — like fine print. The audience sees this on a screen or projector, not a phone. Size up aggressively. If you look at the slide and the body text doesn't feel immediately comfortable to read, it's too small.
+
 | Element | Size | Font | Weight |
 |---------|------|------|--------|
 | Hero title (cover only) | 80-92px | Cormorant Garamond | 300-500 |
+| Hero numbers (stats slides) | 100-120px | Cormorant Garamond | 300 |
 | Page title (all content slides) | 48px | Cormorant Garamond | 300 |
-| Panel/section headings | 36-44px | Cormorant Garamond | 400 |
-| Card titles | 26-34px | Outfit | 600-700 |
-| Body text | 18-22px | Outfit | 400 |
-| Labels, badges | 12-15px | Outfit | 600-700 |
+| Panel/section headings | 44-48px | Cormorant Garamond | 400 |
+| Card titles / column labels | 28-34px | Outfit | 600-700 |
+| Body text / descriptions | 24-28px | Outfit | 400 |
+| Supporting context | 22px | Outfit | 400 |
+| Quote text | 26-34px | Cormorant Garamond | 400 italic |
+| Labels, badges | 14-16px | Outfit | 600-700 |
+
+**The old minimums (18px body, 12px labels) produced slides that consistently looked unprofessional.** These updated sizes reflect what actually works after production testing across dozens of slides.
 
 ### 2.3 Slide Skeleton
 
@@ -191,11 +198,19 @@ Every slide is a self-contained HTML file with inline `<style>`. No external CSS
 
 These patterns recur across slide types. Understanding them helps you compose new layouts.
 
-**Vertical distribution with `space-between`:** When a slide has 3 logical sections (title area, body, tagline/philosophy), wrap them in a flex column with `justify-content: space-between`. This distributes vertical space evenly without manual padding.
+**Vertical distribution with `space-between`:** The most common layout mistake is cramming content into the top 50-60% of the slide and leaving the bottom empty. Fix: wrap the content area in a flex column with `justify-content: space-between` and `flex: 1`. This distributes vertical space evenly without manual padding. Every content slide should use this pattern. If the bottom 30% of a slide is empty cream with no content, the layout is wrong.
 
 **Asymmetric columns (38/62 or 40/60):** When one column has significantly more content, give it proportionally more space. Use a `1.5px` vertical gold divider between them (a separate div, not a border — borders can't be shortened). Control divider height with `margin-top` and `margin-bottom`.
 
-**Panel headings with horizontal rules:** For sections within a slide (like "Managed Agent" and "Coaching"), use large Cormorant display headings (42-44px) followed by a context line (20px Outfit muted), then a full-width `1.5px` horizontal rule at `opacity: 0.25`. This replaces background boxes — cleaner, more professional.
+**Columns with vertical dividers (no boxes):** For 2-3 equal items side by side (e.g., "Week 1 | Month 1 | Your Role"), use flex columns with vertical gold dividers between them — not bordered cards. Each column gets padding (0 32px), the divider is a `1.5px` wide div with `background: rgba(92,74,18,.20)`. This is cleaner than putting each item in a box.
+
+**Panel headings with horizontal rules:** For sections within a slide (like "Managed Agent" and "Coaching"), use large Cormorant display headings (44-48px) followed by a context line (22px Outfit muted), then a full-width `1.5px` horizontal rule at `opacity: 0.25`. This replaces background boxes — cleaner, more professional.
+
+**Icon circles for list items:** Instead of bullet points or small dots, use 40-56px circular icon containers for each list item. Pattern: `width: 40px; height: 40px; border-radius: 50%; background: rgba(92,74,18,.08); border: 1.5px solid rgba(92,74,18,.20); display: flex; align-items: center; justify-content: center`. Place a 20-24px inline SVG icon inside (stroke: #5c4a12, stroke-width: 1.5-1.8, fill: none). This transforms a plain text list into something that looks designed. Use different icons for each item — document, pen, clock, briefcase, routing arrow, shield, etc.
+
+**Numbered circles for sequential items:** For phased/ordered content (Phase 1, Phase 2...), use numbered circle badges: `width: 36px; height: 36px; border-radius: 50%; background: var(--gold); color: white; font-family: var(--font-body); font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center`. Lay each phase as a horizontal flex row: [numbered circle] [text block with label + description].
+
+**SVG diagrams — fill the space:** Diagrams are the visual centerpiece of architecture/flow slides. A 340px-tall diagram in a 1080px slide looks like a thumbnail. SVG viewBox height should be at least 450-500px for the diagram area, and the SVG element should use the full width available (1720-1808px). Input/output boxes in SVGs should be at least 280x130px with 22-24px text. Center agent/hub boxes should be at least 380x130px.
 
 **SVG geometry in padded containers:** The `.content` div has 56px horizontal padding, making internal elements 1808px wide (not 1920px). When placing SVG elements with absolute coordinates, all x-positions are relative to the 1808px content box, not the slide. Card at `left: 0` in a padded content div = 56px from slide edge.
 
@@ -204,18 +219,23 @@ These patterns recur across slide types. Understanding them helps you compose ne
 1. **All px, never rem** — every size, padding, gap
 2. **No partial borders** — full `border: 1.5px solid` or no border. Exception: corner brackets (§2.4) use directional borders by design
 3. **Subtle fills only** — `rgba(gold, 0.03-0.09)`. No opaque fills
-4. **Fill vertical space** — `flex: 1` on content. Bottom 30% must have content
+4. **Fill vertical space aggressively** — `flex: 1` on content, `justify-content: space-between` on the main column. Content that floats in the top half of a 1080px slide is the #1 production defect. If your content only occupies ~600px of 1080px available, the layout is broken. Stretch it.
 5. **Corner clearance** — header/footer clear corner brackets
 6. **SVG connectors edge-to-edge** — lines end at box boundaries, not centers or inside boxes
 7. **No overlapping elements** — lines/decorations must not cross text
-8. **Body text minimum 18px** on 1920x1080. Labels >= 12px. Titles >= 28px
+8. **Body text minimum 24px** on 1920x1080. Labels >= 14px. Titles >= 28px. The old 18px minimum was wrong — it produces text that looks like fine print at presentation scale.
 9. **Card text fills 60%+ of card area** — small text in big boxes looks unfinished
 10. **No eyebrow labels** — uppercase category text above titles is AI slop
 11. **Titles are assertions** — "What the Program Looks Like" → "The Program Structure: Live Coaching, Community, and 24/7 AI Support"
 12. **Consistency is king** — see §2.0. Same title size, same padding, same footer on every slide
 13. **No em dashes in slide text** — use commas, periods, or colons instead. Em dashes read as informal
 14. **Photos use `clip-path: circle(50%)`** — not `border-radius` + `overflow: hidden`
-15. **Remove boxes when content works without them** — horizontal rules under headings are cleaner than bordered rectangles
+15. **Boxes are the exception, not the default** — the natural instinct is to put every piece of content in a bordered rectangle. Resist this. Use vertical dividers between columns, horizontal rules under headings, and icon circles for list items. Only use bordered cards when the content genuinely represents a discrete, titled unit (like tiered pricing cards or tool cards in an architecture diagram). If removing the box doesn't lose information, remove the box.
+16. **Every content slide needs a visual element** — pure text slides look like documents, not presentations. Add: icon circles (§2.5), SVG diagrams, hero numbers, or gold dividers. At minimum, one slide should have an architecture/flow SVG diagram.
+17. **One font family per section** — don't mix 3-4 font styles in a CTA or closing section. Closing/CTA sections use ONE font (Outfit), 2 lines max. A CTA with italic Garamond tagline + Outfit body + italic Garamond action + Outfit email = 4 styles across 5 lines = a poem, not a slide.
+18. **No boilerplate sections** — don't add "Ships first:" lines, formulaic quotes on every slide, or repeated bottom sections. Each slide should stand alone. Quotes are optional — only include when genuinely impactful, never as filler.
+19. **Cover slide simplicity** — the person's name and context (e.g., "Brittany Christenson · AidKit · March 2026") should be plain text with no box, no dot, no badge. Reserve badges for actual status indicators.
+20. **SVG logos over hand-drawn icons** — when referencing real tools (Notion, Slack, Granola), use actual SVG logos via `<image href="assets/logo.svg">` in diagrams. Download official SVGs from Wikipedia/brand resources. Only use hand-drawn SVG icons for generic concepts (clock, shield, document).
 
 ### 2.7 Branding (Customizable)
 
@@ -278,18 +298,36 @@ This reduces 14MB → ~600KB while preserving photo/logo quality at 200dpi. Name
 
 ## Validation Checklist
 
-Run after every slide, before PDF export.
+Run after every slide, before PDF export. These are the production-tested checks that catch the issues that required 3-4 revision rounds to fix manually.
 
-- [ ] Title is 48px Cormorant weight 300, padding `20px 56px 0` — identical to every other slide
-- [ ] Subtitle is 22px Outfit weight 400 — identical to every other slide
+### Consistency (same on every slide)
+- [ ] Title is 48px Cormorant weight 300, padding `20px 56px 0`
+- [ ] Subtitle is 22px Outfit weight 400
 - [ ] Header padding is `48px 56px 0` with logo-cluster left, slide-label right
 - [ ] Footer padding is `16px 56px 48px` with context left, URL right
 - [ ] Content horizontal padding is 56px (never 96px, 80px, etc.)
-- [ ] No rem/em in any font-size — all px
-- [ ] No partial borders — no `border-left` only
+
+### Typography (the #1 revision issue)
+- [ ] Body text >= 24px (not 18-20px — that's fine print at 1920x1080)
+- [ ] Labels >= 14px
+- [ ] Column/card labels >= 28px
+- [ ] No rem/em — all px
+- [ ] CTA/closing sections use ONE font family, not a mix of Garamond italic + Outfit regular + Garamond italic again
+
+### Space utilization (the #2 revision issue)
+- [ ] Content fills vertically — bottom 30% has content, not empty cream
+- [ ] Content area uses `flex: 1` + `justify-content: space-between`
+- [ ] SVG diagrams are >= 450px tall (not 340px thumbnails)
+- [ ] No formulaic bottom sections ("Ships first:", quotes-on-every-slide)
+
+### Visual weight (the #3 revision issue)
+- [ ] Boxes used only when structurally necessary (tier cards, tool cards) — not wrapping every text block
+- [ ] List items have icon circles or numbered badges, not plain dots or bare text
+- [ ] At least one slide has an SVG diagram or visual element beyond text
+- [ ] Vertical gold dividers between columns instead of bordered cards where possible
+
+### Technical
 - [ ] Within 1920x1080 — nothing overflows
-- [ ] Vertical space filled — bottom 30% has content
-- [ ] Font sizes match spec — body >= 18px, labels >= 12px
 - [ ] Card fills distinct from background (opacity >= 0.05)
 - [ ] Borders are 1.5px (not 1px — disappears on light backgrounds)
 - [ ] No red/green — only gold intensity levels
@@ -297,6 +335,7 @@ Run after every slide, before PDF export.
 - [ ] Photos use `clip-path: circle(50%)`, not `border-radius` + `overflow: hidden`
 - [ ] Palette: bg `#f5f3ee`, gold `#5c4a12`, text-primary `#0a1929`
 - [ ] No eyebrow labels or em dashes
+- [ ] Real SVG logos for named tools (Notion, Slack, etc.) — not hand-drawn approximations
 
 ---
 
